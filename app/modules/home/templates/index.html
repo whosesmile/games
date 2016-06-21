@@ -1,0 +1,138 @@
+{% extends layout %}
+{% import macro as macro %}
+{% block style %}
+  {% filter flexible%}
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/home.css'|version }}"/ >
+  {% endfilter %}
+{% endblock %}
+{% block content %}
+  {% if not nested %}
+    <header class="bar" ui-mode="header">
+      <h1 class="title">游戏传奇</h1>
+    </header>
+  {% endif %}
+  <section>
+    <div class="banner">
+      <div class="swipe" data-swipe="true">
+        <div class="wrap">
+          {% for item in [1,2,3] %}
+            <div class="item">
+              <img class="center-block" src="http://7xjyap.com2.z0.glb.qiniucdn.com/b7d136f82803e20864cf52658f9711f7.jpeg" />
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <nav class="flexbox compact text-center text-sm text-dark">
+      <a class="item">
+        <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/83212f1822318bc89566684ef213c749.png" />
+        <span>角色</span>
+      </a>
+      <a class="item">
+        <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/8c72abde2586fc620e4f57d38bb2f9ef.png" />
+        <span>动作</span>
+      </a>
+      <a class="item">
+        <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/b9a17adf2c88c710e33655fb1024f409.png" />
+        <span>休闲</span>
+      </a>
+      <a class="item">
+        <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/e4e0e27a5921e95c3e74f687a8f163aa.png" />
+        <span>棋牌</span>
+      </a>
+      <a class="item">
+        <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/9a190061f12e2e40e5722808142f0de4.png" />
+        <span>策略</span>
+      </a>
+    </nav>
+    <div class="list">
+      <div class="item-divider" ui-mode="15px sync">
+        <span class="text text-black text-lg">新游</span>
+        <span class="text-black text-sm">更多<i class="icon text-gray">&#xe61a;</i></span>
+      </div>
+      <div class="item" ui-mode="20px">
+        <div class="avatar">
+          <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/8d2e0ebafac2f8a542e94113662d9a97.jpg" ui-mode="110px" />
+        </div>
+        <div class="text">
+          <span class="text-md">保卫萝卜3</span>
+          <p class="brief">休闲益智 | 2016-07发布</p>
+          <p class="brief">萌翻世界的塔防游戏</p>
+        </div>
+        <div class="pull-right">
+          <button class="button" ui-mode="default xs inline imitate">查看</button>
+        </div>
+      </div>
+      <div class="item" ui-mode="20px">
+        <div class="avatar">
+          <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/a6f5eace235500672d1fbb201fb292f0.jpg" ui-mode="110px" />
+        </div>
+        <div class="text">
+          <span class="text-md">全民斗战神</span>
+          <p class="brief">APRG | 2016-07发布</p>
+          <p class="brief">腾讯首款变身战斗手游</p>
+        </div>
+        <div class="pull-right">
+          <button class="button" ui-mode="default xs inline imitate">查看</button>
+        </div>
+      </div>
+      <div class="item" ui-mode="20px">
+        <div class="avatar">
+          <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/393060c5df8a8fe03362eadb94f1b9e8.jpg" ui-mode="110px" />
+        </div>
+        <div class="text">
+          <span class="text-md">御龙在天</span>
+          <p class="brief">MMO | 2016-07发布</p>
+          <p class="brief">三国纷争 皇权由你掌握</p>
+        </div>
+        <div class="pull-right">
+          <button class="button" ui-mode="default xs inline imitate">查看</button>
+        </div>
+      </div>
+    </div>
+    <div class="list">
+      <div class="item-divider" ui-mode="15px sync">
+        <span class="text text-black text-lg">精品</span>
+      </div>
+      <div class="item" ui-mode="20px">
+        <div class="avatar">
+          <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/8d2e0ebafac2f8a542e94113662d9a97.jpg" ui-mode="110px" />
+        </div>
+        <div class="text">
+          <span class="text-md">保卫萝卜3</span>
+          <p class="brief">休闲益智 | 2016-07发布</p>
+          <p class="brief">萌翻世界的塔防游戏</p>
+        </div>
+        <div class="pull-right">
+          <button class="button" ui-mode="default xs inline imitate">查看</button>
+        </div>
+      </div>
+      <div class="item" ui-mode="20px">
+        <div class="avatar">
+          <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/a6f5eace235500672d1fbb201fb292f0.jpg" ui-mode="110px" />
+        </div>
+        <div class="text">
+          <span class="text-md">全民斗战神</span>
+          <p class="brief">APRG | 2016-07发布</p>
+          <p class="brief">腾讯首款变身战斗手游</p>
+        </div>
+        <div class="pull-right">
+          <button class="button" ui-mode="default xs inline imitate">查看</button>
+        </div>
+      </div>
+      <div class="item" ui-mode="20px">
+        <div class="avatar">
+          <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/393060c5df8a8fe03362eadb94f1b9e8.jpg" ui-mode="110px" />
+        </div>
+        <div class="text">
+          <span class="text-md">御龙在天</span>
+          <p class="brief">MMO | 2016-07发布</p>
+          <p class="brief">三国纷争 皇权由你掌握</p>
+        </div>
+        <div class="pull-right">
+          <button class="button" ui-mode="default xs inline imitate">查看</button>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

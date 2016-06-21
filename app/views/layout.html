@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ title|default('游戏传奇')}}</title>
+    <meta content="telephone=no,email=no,address=no" name="format-detection" />
+    <script type="text/javascript" src="{{ '/assets/vendor/lib.js'|version }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/vendor/ui.css'|version }}" />
+    {% block style %}{% endblock %}
+  </head>
+  <body class="{{ clazz }}">
+    {% block header %}{% endblock %}
+    {% block content %}{% endblock %}
+    {% block footer %}{% endblock %}
+    <script type="text/javascript" src="{{ '/assets/js/base.js'|version }}"></script>
+    {% block script %}{% endblock %}
+  </body>
+</html>

@@ -1,0 +1,12 @@
+/* 轮播 默认(750 * 240) */
+.swipe { position: relative; overflow: hidden; padding-top: 32%; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+.swipe > .wrap { position: absolute; left: 0; top: 0; overflow: hidden; }
+.swipe > .wrap > .item { float: left; }
+.swipe > .pages { position: absolute; text-align: center; z-index: 10; bottom: 0; width: 100%; }
+.swipe > .pages > a { display: inline-block; width: 18px; height: 18px; overflow: hidden; margin: 0 5px; border-radius: 100%; vertical-align: middle; background-color: rgba(255, 255, 255, 0.5); box-shadow: 1px 1px 1px rgba(100, 100, 100, 0.2); }
+.swipe > .pages > a.active { background-color: rgba(255, 120, 35, 0.8); }
+
+/* 首页 */
+nav { padding: 20px; background-color: #fff; margin-top: 20px; }
+nav .item { color: #333; line-height: 1; }
+nav .item img { display: block; width: 95px; height: 95px; margin: auto auto 15px; }
