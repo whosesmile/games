@@ -1,4 +1,58 @@
 /*!
+ * 滚动方法
+ */
+(function ($) {
+  // 绝对值
+  $.scrollTo = function (endY, duration) {
+    endY = endY || ($.os.android ? 1 : 0);
+    duration = duration || 350;
+    var startT = Date.now();
+    var startY = document.body.scrollTop;
+    var finishT = startT + duration;
+
+    var interpolate = function (source, target, shift) {
+      return (source + (target - source) * shift);
+    };
+
+    var easing = function (pos) {
+      return (-Math.cos(pos * Math.PI) / 2) + .5;
+    };
+
+    var animate = function () {
+      var now = Date.now();
+      var shift = (now > finishT) ? 1 : (now - startT) / duration;
+      window.scrollTo(0, interpolate(startY, endY, easing(shift)));
+      if (now < finishT) {
+        setTimeout(animate, 15);
+      }
+    };
+
+    animate();
+  };
+
+  // 差值
+  $.scrollBy = function (incre, duration) {
+    return $.scrollTo(document.body.scrollTop + incre, duration)
+  };
+})(window.jQuery || window.Zepto);
+
+/*!
+ * 配置模板
+ */
+(function (global) {
+  var env = nunjucks.configure();
+
+  // 增加全局过滤器
+  env.addFilter('example', function (input) {
+    return input;
+  });
+
+  // 对外提供句柄
+  global.template = env;
+
+})(window);
+
+/*!
  * 滑动焦点图
  */
 (function (global) {
@@ -129,7 +183,7 @@
 
 })(window);
 
-/**
+/*!
  * 延迟加载图片 https://github.com/luis-almeida
  */
 (function ($) {
@@ -175,7 +229,140 @@
   $('img[data-src]').unveil(300);
 })(window.jQuery || window.Zepto);
 
-/**
+/*!
+ * 弹窗控件
+ */
+(function (global) {
+
+  var widget = null;
+
+  // 默认文案
+  var options = {
+    title: '温馨提示',
+    message: '天啦噜，这都被你发现啦！',
+    cancelText: '取消',
+    confirmText: '确定',
+    type: 'default',
+    reject: $.noop,
+    callback: $.noop,
+  };
+
+  // 兼容各种参数类型
+  function compatible(context, callback) {
+    if (widget !== null) {
+      widget.remove();
+    }
+    if (typeof context !== 'object') {
+      context = {
+        message: context
+      };
+    }
+    if (typeof callback === 'function') {
+      context.callback = callback;
+    }
+
+    return $.extend({}, options, context);
+  }
+
+  global.Modal = {
+
+    alert: function (context, callback) {
+      context = compatible(context, callback);
+      widget = $(template.render('alert.html', context)).appendTo('body');
+      widget.on('click', '.footer .confirm', function () {
+        if (context.callback() !== false) {
+          widget.hide();
+        }
+      });
+
+      return widget;
+    },
+
+    confirm: function (context, callback) {
+      context = compatible(context, callback);
+      widget = $(template.render('confirm.html', context)).appendTo('body');
+      widget.on('click', '.footer .cancel', function () {
+        if (context.reject() !== false) {
+          widget.hide();
+        }
+      });
+      widget.on('click', '.footer .confirm', function () {
+        if (context.callback() !== false) {
+          widget.hide();
+        }
+      });
+
+      return widget;
+    }
+  };
+})(window);
+
+/*!
+ * 吐司控件
+ */
+(function (global) {
+
+  var widget = null;
+
+  // 预配置
+  var preconfig = {
+    loading: {
+      icon: '&#xe60d;',
+      message: '载入中',
+      extra: 'wait'
+    },
+    failure: {
+      icon: '&#xe613;',
+      message: '操作失败',
+    },
+    success: {
+      icon: '&#xe611;',
+      message: '操作成功',
+    },
+    network: {
+      icon: '&#xe610;',
+      message: '网络异常',
+    },
+  };
+
+  global.Toast = {
+
+    show: function (options) {
+      if (widget !== null) {
+        widget.remove();
+      }
+      var context = $.extend({
+        icon: '&#xe60e;',
+        message: '天啦噜',
+        holding: 4000
+      }, options);
+
+      widget = $(template.render('toast.html', context)).appendTo('body');
+
+      if (typeof context.holding === 'number') {
+        setTimeout(Toast.hide.bind(Toast), context.holding);
+      }
+
+      return widget;
+    },
+
+    hide: function () {
+      if (widget !== null) {
+        widget.hide();
+      }
+      return widget;
+    },
+  };
+
+  // 添加快捷方式
+  Object.keys(preconfig).forEach(function (type) {
+    Toast[type] = function () {
+      return this.show(preconfig[type]);
+    };
+  });
+})(window);
+
+/*!
  * 监听滚动回调 通常用于翻页
  */
 (function (global) {
@@ -194,7 +381,7 @@
         // 整个高度 - 滚动条位置 < threshold
         if (document.body.scrollHeight - document.body.scrollTop - document.documentElement.clientHeight < threshold) {
           loading = true;
-          fireCallback().then(function (data) {
+          callbacks().then(function (data) {
             loading = false;
             return data;
           });
@@ -206,15 +393,14 @@
   };
 
   // 调用注册回调
-  var fireCallback = function () {
+  var callbacks = function () {
     return new Promise(function (resolve, reject) {
-      var num = fns.length;
       var list = [];
+      var num = fns.length;
       fns.forEach(function (fn) {
         fn().then(function (res) {
           list.push(res);
-          --num;
-          if (num === 0) {
+          if (--num === 0) {
             resolve(list);
           }
         });
@@ -231,43 +417,41 @@
     }
   };
 
+  // loading tips
+  var loadmore = $('<div class="loadmore"><i class="icon">&#xe60d;</i> 加载中...</div>');
+
   // 添加一个翻页模板函数
   global.loadMoreFactory = function (options) {
-    // 加载更多分页
+    // 是否有更多数据
+    var more = true;
     var page = options.page || 1;
     var size = options.size || 20;
     // 是否执行
-    var before = options.before || function () {
-      return true;
-    };
+    var before = options.before || $.noop;
     // 事后回调
     var after = options.after || $.noop;
 
-    var more = true; // 是否有更多数据
+    // 预先执行
+    loadmore.appendTo('body');
 
     // 第一个回调
     return listenScroll(function () {
       return new Promise(function (resolve, reject) {
-        if (more === false || !before()) {
+        if (more === false || before() === false) {
           return resolve(null);
-        }
-        // 添加loading文案
-        if ($('section p.loadmore').length === 0) {
-          $('section').append('<p class="loadmore">正在加载...</p>');
         }
         $.get(options.url, {
           page: ++page,
           size: size,
         }).then(function (res) {
           if (res.code === 200) {
-            var pieces = $(Template.compile(options.template, res.data)).appendTo(options.panel);
+            var pieces = $(template.render(options.template, res.data)).appendTo(options.panel);
             // 添加延迟加载图片功能
             pieces.find('img[data-src]').unveil(300);
             more = res.data.list.length >= size;
             after(res.data);
-
             if (!more) {
-              $('section p.loadmore').remove();
+              loadmore.remove();
             }
           }
           resolve(res);

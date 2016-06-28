@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import _ from 'lodash';
 import Koa from 'koa';
 import path from 'path';
 import nunjucks from 'nunjucks';
@@ -7,6 +8,7 @@ import config from './config';
 import assets from 'koa-static-cache';
 import favicon from './helper/favicon';
 import filters from './helper/filters';
+import minify from './helper/minify';
 import SmartLoader from './helper/loader';
 
 // init koa 2.0
@@ -55,10 +57,36 @@ app.use(async(ctx, next) => {
 // inject render method
 app.use(async(ctx, next) => {
   ctx.render = function (...args) {
+    // JSON
+    if (_.isNumber(args[0])) {
+      let [code, data] = [args[0], {}];
+
+      // 快捷消息模式
+      if (!_.isObject(args[1])) {
+        data.message = args[1];
+      }
+
+      return ctx.body = {
+        code: code,
+        data: _.merge(...[data, ...args.slice(1)]),
+      };
+    }
+
+    // HTML
     return ctx.body = env.render(...args);
   };
   await next();
 });
+
+// minify html
+app.use(minify({
+  minifyJS: true,
+  minifyCSS: true,
+  collapseWhitespace: true,
+  keepClosingSlash: true,
+  removeComments: true,
+  processScripts: []
+}));
 
 // import modules
 helper.walk(path.join(__dirname, 'modules')).forEach(function (path) {

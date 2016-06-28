@@ -1,0 +1,28 @@
+/* 头图 */
+.banner { padding-top: 64%; }
+.banner .list { position: absolute; width: 100%; bottom: 140px; margin: 0; }
+.banner .list .item { background: transparent; color: #fff; }
+.banner .flexbox { position: absolute; height: 120px; bottom: 0; width: 100%; line-height: 1; background-color: rgba(255, 255, 255, 0.1); }
+.banner .flexbox .item { color: #fff; }
+.banner .flexbox .item:not(:last-child) { border-right: 1px solid rgba(255, 255, 255, 0.5); }
+.banner .flexbox .item p { margin-bottom: 10px; }
+
+/* 评分 */
+#score .starts { height: 48px; }
+#score .labels { position: relative; margin-top: 10px; font-size: 0; }
+#score .labels .item { display: inline-block; padding: 15px 20px; color: #666; font-size: 24px; background-color: #f1f1f1; line-height: 1; border-radius: 27px; margin-right: 20px; }
+#score .labels:after { content: ''; position: absolute; right: 0; height: 100%; width: 20%; background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0)), to(rgba(255, 255, 255, 1))); background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)); background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)); }
+
+/* 介绍 */
+#introduce .item { background-size: 0 0, 0 0, 0 0, 0 0; }
+#introduce .action { cursor: pointer; margin: 20px 0 0; }
+#introduce .content { display: none; }
+#introduce .content p { margin-bottom: 20px; }
+
+/* 图窗 */
+#showcase { background-color: #fff; }
+#showcase .panel { width: 100%; height: 515px; padding: 20px 10px; white-space: nowrap; overflow-y: hidden; overflow-x: scroll; -webkit-overflow-scrolling: touch; font-size: 0; }
+#showcase .item { display: inline-block; width: 290px; height: 475px; margin: 0 10px; overflow: hidden; }
+
+/* 推荐 */
+#promote .item .avatar { width: 90px; height: 90px; border-radius: 20px; overflow: hidden; margin: 0 auto; }

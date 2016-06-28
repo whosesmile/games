@@ -26,20 +26,31 @@ module.exports = function (env) {
   // static version control to prevent browser cache
   env.addFilter('version', function (input) {
     if (!versions[input]) {
+      var extname;
       var file = abspath(input);
       try {
         var text = fs.readFileSync(file).toString();
         var version = crypto.createHash('md5').update(text).digest('hex').substring(0, 8).toUpperCase();
-        var extname = path.extname(file);
+        extname = path.extname(file);
         // 需要配合静态路径重写路由
         versions[input] = util.format('%s/%s-$%s$%s', path.dirname(input), path.basename(input, extname), version, extname);
       }
       catch (e) {
-        var extname = path.extname(input);
-        versions[input] = util.format('%s?$%s$%s', input, Date.now(), extname);
+        extname = path.extname(input);
+        versions[input] = util.format('%s/%s-$%s$%s', path.dirname(input), path.basename(input, extname), String(Date.now()).substring(0, 8), extname);
       }
     }
 
     return versions[input];
+  });
+
+  // remove HTML attr like: (style, class, width, height)
+  env.addFilter('rmattr', function (content) {
+    return content.replace(/\s?(style|class|width|height)=".+?"/g, '');
+  });
+
+  // remove HTML tag
+  env.addFilter('rmhtml', function (content) {
+    return content.replace(/(<([^>]+)>)/ig, '');
   });
 };

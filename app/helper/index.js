@@ -8,6 +8,7 @@ var walk = exports.walk = function (dir, deep) {
 
   var results = [];
   list.filter(function (file) {
+    // 不包含隐藏文件
     return !file.startsWith('.');
   }).forEach(function (file) {
     file = path.resolve(dir, file);
@@ -22,7 +23,7 @@ var walk = exports.walk = function (dir, deep) {
   return results;
 };
 
-// 返回当前的程序调用栈  
+// 返回当前的程序调用栈
 var callsite = exports.callsite = function () {
   var orig = Error.prepareStackTrace;
   Error.prepareStackTrace = function (_, stack) {

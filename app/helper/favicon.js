@@ -22,12 +22,12 @@ module.exports = function (fav, options) {
   fav = path.resolve(fav);
   options = options || {};
 
-  var maxAge = options.maxAge == null ? 86400000 : Math.min(Math.max(0, options.maxAge), 31556926000);
+  var maxAge = options.maxAge === null ? 86400000 : Math.min(Math.max(0, options.maxAge), 31556926000);
 
   return async(ctx, next) => {
     if ('/favicon.ico' !== ctx.path) {
       return await next();
-    };
+    }
 
     if (!fav) return;
 

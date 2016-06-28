@@ -8,6 +8,7 @@ var connect = require('gulp-connect');
 var insert = require('gulp-insert');
 var minify = require('gulp-minify-css');
 var px2rem = require('gulp-smile-px2rem');
+var nunjucks = require('gulp-nunjucks');
 
 // for dist should be dist
 var target = '.tmp/';
@@ -22,13 +23,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('sync:source', function () {
-  return gulp.src(['src/**/*', '!src/css/**/*', '!src/vendor/ui.css'], {
-    base: 'src'
-  }).pipe(gulp.dest(target)).pipe(connect.reload());
-});
-
-gulp.task('sync:ui', function () {
-  return gulp.src(['src/vendor/ui.css'], {
+  return gulp.src(['src/**/*', '!src/js/base.js', '!src/css/**/*', '!src/templates/**/*'], {
     base: 'src'
   }).pipe(gulp.dest(target)).pipe(connect.reload());
 });
@@ -60,15 +55,32 @@ gulp.task('minify:css', function () {
 
 // uglify js
 gulp.task('uglify:js', function () {
-  return gulp.src(['src/js/**/*'], {
+  return gulp.src([target + '/js/**/*'], {
     base: 'src'
   }).pipe(uglify()).pipe(gulp.dest(target)).pipe(connect.reload());
 });
 
+// nunjucks
+gulp.task('nunjucks', function () {
+  return gulp.src('src/templates/**/*')
+    .pipe(nunjucks.precompile())
+    .pipe(gulp.dest(target + '/templates'))
+    .pipe(connect.reload());
+});
+
+// insert debug css
+gulp.task('concat:tmpl', ['nunjucks'], function () {
+  return gulp.src([target + '/templates/**/*.js', 'src/js/base.js'])
+    .pipe(concat('base.js'))
+    .pipe(gulp.dest(target + '/js/'))
+    .pipe(connect.reload());
+});
+
 // watch file change
 gulp.task('watch', function () {
-  gulp.watch(['src/**/*', '!src/css/**/*', '!src/vendor/ui.css'], ['sync:source']);
+  gulp.watch(['src/**/*', '!src/js/base.js', '!src/css/**/*', '!src/templates/**/*', '!src/vendor/ui.css'], ['sync:source']);
   gulp.watch(['src/css/**/*'], ['px2rem']);
+  gulp.watch(['src/templates/**/*.html', 'src/js/base.js'], ['concat:tmpl']);
   gulp.watch(['src/vendor/ui.css'], ['concat:debug']);
 });
 
@@ -76,18 +88,18 @@ gulp.task('watch', function () {
 gulp.task('connect', function () {
   connect.server({
     root: [target, '.'],
-    port: 7000,
+    port: 7070,
     livereload: true
   });
 });
 
 // Default task clean temporaries directories and launch the main optimization build task
 gulp.task('default', function () {
-  sequence('clean', ['sync:source', 'px2rem'], ['concat:debug'], ['connect', 'watch']);
+  sequence('clean', ['sync:source', 'px2rem'], ['concat:debug', 'concat:tmpl'], ['connect', 'watch']);
 });
 
 // build project
 gulp.task('dist', function () {
   target = 'dist/';
-  sequence('clean', ['sync:source', 'sync:ui', 'px2rem'], ['minify:css', 'uglify:js']);
+  sequence('clean', ['sync:source', 'px2rem'], ['minify:css', 'concat:tmpl'], ['uglify:js']);
 });

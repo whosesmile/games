@@ -1,0 +1,12 @@
+<div class="modal" ui-mode="{{ type }}">
+  <div class="panel">
+    <h3 class="title">{{ title|safe }}</h3>
+    <div class="text">{{ message|safe }}</div>
+    <div class="footer">
+      <div class="button-group">
+        <button class="button cancel" ui-mode="transparent square">{{ cancelText|safe }}</button>
+        <button class="button confirm" ui-mode="transparent square">{{ confirmText|safe }}</button>
+      </div>
+    </div>
+  </div>
+</div>
