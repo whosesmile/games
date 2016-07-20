@@ -1,0 +1,51 @@
+{% set clazz = "score" %}
+{% set title = "火影忍者-疾风传 游戏印象" %}
+{% extends layout %}
+{% import macro as macro %}
+{% block style %}
+  <link rel="stylesheet" href="{{ '/assets/css/game.css'|version }}" />
+{% endblock %}
+{% block content %}
+  {% if not nested %}
+    <header class="bar" ui-mode="header">
+      {{ macro.back() }}
+      <h1 class="title">{{ title }}</h1>
+    </header>
+  {% endif %}
+  <section class="has-footer">
+    <div class="banner vspace hspace clearfix" ui-mode="60px">
+      <div class="avatar">
+        <img class="center-block" src="http://7xjyap.com2.z0.glb.qiniucdn.com/f9d5b1331e8f4c50d8cbb44d146cddc2.png" ui-mode="110px" />
+      </div>
+      <div class="text">
+        <h3 class="text-xxl">综合印象：4星</h3>
+        <div class="starts">
+          <i class="icon text-yellow">&#xe60f;</i>
+          <i class="icon text-yellow">&#xe60f;</i>
+          <i class="icon text-yellow">&#xe60f;</i>
+          <i class="icon text-yellow">&#xe60f;</i>
+          <i class="icon text-light">&#xe60f;</i>
+        </div>
+      </div>
+    </div>
+    <div class="vspace" ui-mode="80px">
+      <div class="hspace labels" ui-mode="20px">
+        <span class="item">全屏奥义燃到哭 <i class="text-xs text-gray">7370</i></span>
+        <span class="item">重拾青春回忆 <i class="text-xs text-gray">6730</i></span>
+        <span class="item">忍术格斗超带感 <i class="text-xs text-gray">4021</i></span>
+        <span class="item">查克拉战斗吧 <i class="text-xs text-gray">2400</i></span>
+        <span class="item">全屏奥义燃烧到哭 <i class="text-xs text-gray">7370</i></span>
+        <span class="item">重拾青春回忆 <i class="text-xs text-gray">6730</i></span>
+        <span class="item">忍术格斗超带感 <i class="text-xs text-gray">4021</i></span>
+        <span class="item">查克拉战斗吧 <i class="text-xs text-gray">2400</i></span>
+        <span class="item">沙之我爱罗 <i class="text-xs text-gray">1932</i></span>
+      </div>
+    </div>
+  </section>
+  <footer class="bar" ui-mode="footer fixed flat">
+    <button class="button" ui-mode="success square">进入游戏</button>
+  </footer>
+{% endblock %}
+{% block script %}
+  <script src="{{ '/assets/js/game.js'|version }}"></script>
+{% endblock %}

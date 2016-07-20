@@ -17,6 +17,11 @@ router.get('/game/:id', async(ctx, next) => {
   await ctx.render('game.html');
 });
 
+// score
+router.get('/score/:id', async(ctx, next) => {
+  await ctx.render('score.html');
+});
+
 // ajax
 router.get('/games/ajax/:type', async(ctx, next) => {
   // 延迟模拟

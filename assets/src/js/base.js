@@ -96,7 +96,9 @@
         left: -index * basis
       }, 400, 'ease-in-out', function () {
         running = false;
-        pages.removeClass('active').eq(index).addClass('active');
+        if (pages) {
+          pages.removeClass('active').eq(index).addClass('active');
+        }
         autoplay();
       });
     }
@@ -221,10 +223,14 @@
       images = images.not(loaded);
     }
 
-    $w.on("scroll.unveil resize.unveil lookup.unveil", unveil);
-    unveil();
+    // 优化处理
+    if (images.length) {
+      $w.on("scroll.unveil resize.unveil lookup.unveil", unveil);
+      unveil();
+    }
     return this;
   };
+
   // 默认开启延迟加载
   $('img[data-src]').unveil(300);
 })(window.jQuery || window.Zepto);
@@ -323,7 +329,13 @@
       icon: '&#xe610;',
       message: '网络异常',
     },
+    message: {
+      icon: '&#xe60e;',
+      message: '天啦噜',
+    },
   };
+
+  var timer = null;
 
   global.Toast = {
 
@@ -334,13 +346,14 @@
       var context = $.extend({
         icon: '&#xe60e;',
         message: '天啦噜',
-        holding: 4000
+        holding: 3500
       }, options);
 
       widget = $(template.render('toast.html', context)).appendTo('body');
 
       if (typeof context.holding === 'number') {
-        setTimeout(Toast.hide.bind(Toast), context.holding);
+        clearTimeout(timer);
+        timer = setTimeout(Toast.hide.bind(Toast), context.holding);
       }
 
       return widget;
@@ -356,14 +369,19 @@
 
   // 添加快捷方式
   Object.keys(preconfig).forEach(function (type) {
-    Toast[type] = function () {
-      return this.show(preconfig[type]);
+    Toast[type] = function (options) {
+      if (typeof options === 'string') {
+        options = {
+          message: options
+        };
+      }
+      return this.show($.extend({}, preconfig[type], options));
     };
   });
 })(window);
 
 /*!
- * 监听滚动回调 通常用于翻页
+ * 监听滚动回调 - 临界点触发
  */
 (function (global) {
 
@@ -376,7 +394,7 @@
     // 防止重复请求
     var loading = false;
     var $window = $(window);
-    $(window).on('scroll.more resize.more lookup.more', function (e) {
+    $(window).on('scroll.loading resize.loading lookup.loading', function (e) {
       if (!loading) {
         // 整个高度 - 滚动条位置 < threshold
         if (document.body.scrollHeight - document.body.scrollTop - document.documentElement.clientHeight < threshold) {
@@ -395,18 +413,17 @@
   // 调用注册回调
   var callbacks = function () {
     return new Promise(function (resolve, reject) {
-      var list = [];
+      var res = [];
       var num = fns.length;
       fns.forEach(function (fn) {
-        fn().then(function (res) {
-          list.push(res);
+        fn().then(function (data) {
+          res.push(data);
           if (--num === 0) {
-            resolve(list);
+            resolve(res);
           }
         });
       });
     });
-
   };
 
   // 添加滚动事件
@@ -430,16 +447,16 @@
     var before = options.before || $.noop;
     // 事后回调
     var after = options.after || $.noop;
-
-    // 预先执行
+    // 预先执行 - 微信内部scroll event不停止 不调用
     loadmore.appendTo('body');
 
-    // 第一个回调
+    // 注册回调
     return listenScroll(function () {
       return new Promise(function (resolve, reject) {
         if (more === false || before() === false) {
           return resolve(null);
         }
+
         $.get(options.url, {
           page: ++page,
           size: size,

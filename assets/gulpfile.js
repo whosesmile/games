@@ -35,14 +35,6 @@ gulp.task('px2rem', function () {
   }).pipe(px2rem()).pipe(gulp.dest(target)).pipe(connect.reload());
 });
 
-// insert debug css
-gulp.task('concat:debug', function () {
-  return gulp.src('src/vendor/ui.css')
-    .pipe(insert.prepend('/*! 警告：调试使用 线上需删除 */\n@media only screen and (min-device-width:1366px) {body { max-width: 750px; margin-left: auto !important; margin-right: auto !important; }}\n\n'))
-    .pipe(gulp.dest(target + '/vendor'))
-    .pipe(connect.reload());
-});
-
 // minify css
 gulp.task('minify:css', function () {
   return gulp.src(target + '/css/**/*')
@@ -78,10 +70,9 @@ gulp.task('concat:tmpl', ['nunjucks'], function () {
 
 // watch file change
 gulp.task('watch', function () {
-  gulp.watch(['src/**/*', '!src/js/base.js', '!src/css/**/*', '!src/templates/**/*', '!src/vendor/ui.css'], ['sync:source']);
+  gulp.watch(['src/**/*', '!src/js/base.js', '!src/css/**/*', '!src/templates/**/*'], ['sync:source']);
   gulp.watch(['src/css/**/*'], ['px2rem']);
   gulp.watch(['src/templates/**/*.html', 'src/js/base.js'], ['concat:tmpl']);
-  gulp.watch(['src/vendor/ui.css'], ['concat:debug']);
 });
 
 // connect server
@@ -95,7 +86,7 @@ gulp.task('connect', function () {
 
 // Default task clean temporaries directories and launch the main optimization build task
 gulp.task('default', function () {
-  sequence('clean', ['sync:source', 'px2rem'], ['concat:debug', 'concat:tmpl'], ['connect', 'watch']);
+  sequence('clean', ['sync:source', 'px2rem'], ['concat:tmpl'], ['connect', 'watch']);
 });
 
 // build project
