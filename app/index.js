@@ -96,4 +96,4 @@ helper.walk(path.join(__dirname, 'modules')).forEach(function (path) {
   }
 });
 
-app.listen(3000, () => console.log('server started 3000'));
+app.listen(config.port, () => console.log('\nServer started on port:', config.port, '\n'));

@@ -5,6 +5,9 @@ module.exports = {
   // view folder
   views: 'templates',
 
+  // port
+  port: 3700,
+
   // watch tempalte change
   watch: true,
 
