@@ -1,4 +1,11 @@
-require('babel-register');
-require('./app');
+var config = require('./app/config');
 
-// require('./lib');
+// 开发环境
+if (config.watch) {
+  require('babel-register');
+  require('./app');
+}
+// 生产环境
+else {
+  require('./lib');
+}

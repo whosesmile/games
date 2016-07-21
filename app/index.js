@@ -66,14 +66,14 @@ app.use(async(ctx, next) => {
         data.message = args[1];
       }
 
-      return ctx.body = {
+      return {
         code: code,
         data: _.merge(...[data, ...args.slice(1)]),
       };
     }
 
     // HTML
-    return ctx.body = env.render(...args);
+    return env.render(...args);
   };
   await next();
 });
