@@ -35,3 +35,4 @@ upload
 .svnignore
 assets/dist
 config.js
+lib
