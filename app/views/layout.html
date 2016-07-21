@@ -14,5 +14,16 @@
     {% block footer %}{% endblock %}
     <script src="{{ '/assets/js/base.js'|version }}"></script>
     {% block script %}{% endblock %}
+
+    <!-- 百度统计 -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?dccbf186404bba7dea248e02cbdc0dbe";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
   </body>
 </html>
