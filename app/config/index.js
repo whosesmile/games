@@ -3,7 +3,7 @@ var path = require('path');
 var env = {};
 
 try {
-  require('../../config');
+  env = require('../../config');
 }
 catch (e) {
   console.log('使用生产环境');
@@ -25,3 +25,5 @@ module.exports = {
   // static file
   assets: env.assets || path.join(__dirname, '../../assets/dist'),
 };
+
+console.log(env)
