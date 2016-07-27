@@ -13,6 +13,11 @@ module.exports = {
   // port
   port: 3700,
 
+  // log file
+  logger: {
+    error: '/var/log/legend/error.log'
+  },
+
   // view folder
   views: 'templates',
 
@@ -25,5 +30,3 @@ module.exports = {
   // static file
   assets: env.assets || path.join(__dirname, '../../assets/dist'),
 };
-
-console.log(env)

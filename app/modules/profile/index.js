@@ -5,11 +5,6 @@ var router = module.exports = new Router({
 });
 
 // profile
-router.get('/', function (ctx, next) {
-  ctx.body = ctx.render('index.html');
-});
-
-// profile
-router.get('/test', function (ctx, next) {
-  ctx.body = ctx.render('test.html');
+router.get('/', async(ctx, next) => {
+  ctx.body = await ctx.render('index.html');
 });

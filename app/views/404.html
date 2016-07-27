@@ -1,7 +1,7 @@
 {% set clazz = 'error' %}
-{% set title = "正在修建" %}
-{% extends layout %}
-{% import macro as macro %}
+{% set title = "星际迷航" %}
+{% extends './layout.html' %}
+{% import './macro.html' as macro %}
 {% block content %}
   {% if not nested %}
     <header class="bar" ui-mode="header">
@@ -13,7 +13,8 @@
     <div class="plate">
       <div class="draw">
         <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/image-c8b8f236-24f1-4859-9e6b-02fb65d4e87a.png" alt="默认" />
-        <h4 class="title">您来的太早了，还没有修建好</h4>
+        <h4 class="title">404</h4>
+        <div class="brief">{{ message|default('服务器迷失在宇宙中，找不到航向...') }}</div>
       </div>
     </div>
   </section>
