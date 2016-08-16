@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import moment from 'moment';
 import util from 'util';
 import crypto from 'crypto';
 import config from '../config';
@@ -52,5 +53,17 @@ module.exports = function (env) {
   // remove HTML tag
   env.addFilter('rmhtml', function (content) {
     return content.replace(/(<([^>]+)>)/ig, '');
+  });
+
+  // date
+  env.addFilter('date', function (time, format) {
+    return time ? moment(time).format(format) : null;
+  });
+
+  // 分割
+  env.addFilter('split', function (str, symbols) {
+    return str ? str.split(symbols || /[\s,]/).filter(function (item) {
+      return item.trim().length > 0;
+    }) : [];
   });
 };

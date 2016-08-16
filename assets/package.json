@@ -21,6 +21,9 @@
     "node": ">=0.10.0"
   },
   "devDependencies": {
+    "gulp-minify-html": "^1.0.6",
+    "gulp-ng-annotate": "^2.0.0",
+    "gulp-ng-html2js": "^0.2.2",
     "gulp-nunjucks": "^2.2.0"
   }
 }

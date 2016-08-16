@@ -3,6 +3,7 @@ import _ from 'lodash';
 import Koa from 'koa';
 import path from 'path';
 import nunjucks from 'nunjucks';
+import parser from 'koa-body';
 import helper from './helper';
 import config from './config';
 import assets from 'koa-static-cache';
@@ -64,10 +65,9 @@ app.use(async(ctx, next) => {
       if (!_.isObject(args[0])) {
         data.message = args[0];
       }
-
       return {
         code: code,
-        data: _.merge(...[data, ...args]),
+        data: _.defaults(data, ...args.reverse()),
       };
     }
 
@@ -78,6 +78,8 @@ app.use(async(ctx, next) => {
     if (!name.startsWith('.') && !name.startsWith(config.views)) {
       abspath = path.resolve(module, config.views, name);
     }
+
+    env.render(...[abspath, ...args]);
     return env.render(...[abspath, ...args]);
   };
   await next();
@@ -85,33 +87,51 @@ app.use(async(ctx, next) => {
 
 // error handler
 app.use(async(ctx, next) => {
+  console.time('z');
   try {
     await next();
   }
   catch (err) {
     // will only respond with JSON
     ctx.status = err.statusCode || err.status || 500;
-    logger.error(ctx.url, ctx.method, ctx.headers, err, '\n');
+    logger.error(ctx.status, ctx.url, ctx.method, ctx.headers, err);
     ctx.body = ctx.render('./views/500.html');
   }
   finally {
     if (ctx.status === 403) {
+      logger.error(ctx.status, ctx.url);
       ctx.body = ctx.render('./views/403.html');
     }
     else if (ctx.status === 404) {
+      logger.error(ctx.status, ctx.url);
       ctx.body = ctx.render('./views/404.html');
     }
   }
+  console.timeEnd('z');
 });
 
 // minify html
 app.use(minify({
-  minifyJS: true,
+  minifyJS: {
+    mangle: false
+  },
   minifyCSS: true,
   collapseWhitespace: true,
   keepClosingSlash: true,
   removeComments: true,
   processScripts: []
+}));
+
+// parse form
+app.use(parser({
+  strict: false,
+  jsonLimit: 1024 * 1024 * 2, // 2MB
+  formLimit: 1024 * 1024 * 2, // 2MB
+  textLimit: 1024 * 1024 * 2, // 2MB
+  multipart: true,
+  formidable: {
+    uploadDir: path.join(__dirname, '../upload')
+  }
 }));
 
 // import modules

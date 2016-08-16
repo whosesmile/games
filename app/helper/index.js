@@ -35,3 +35,23 @@ var callsite = exports.callsite = function () {
   Error.prepareStackTrace = orig;
   return stack;
 };
+
+/**
+ * 禁用缓存拦截器
+ */
+global.cacheDisabled = async(ctx, next) => {
+  ctx.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+  ctx.set('Pragma', 'no-cache');
+  ctx.set('Expires', 0);
+  await next();
+};
+
+/**
+ * 管理员拦截器
+ */
+global.adminRequired = async(ctx, next) => {
+  if (true) {
+    return await next();
+  }
+  ctx.status = 403;
+};

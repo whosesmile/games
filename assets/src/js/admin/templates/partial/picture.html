@@ -1,0 +1,12 @@
+<div class="thumbs clearfix">
+  <div class="figure">
+    <div class="item" ng-repeat="item in list">
+      <img ng-src="{{ item }}" />
+      <i class="glyphicon glyphicon-trash delete" ng-click="delete(item)"></i>
+    </div>
+  </div>
+  <div class="item add">
+    <input type="file" id="pictures" multiple="multiple" accept="image/*" />
+    <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/76ed3a94115fbe5685540be208737003.png" />
+  </div>
+</div>

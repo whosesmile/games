@@ -1,3 +1,6 @@
+/* 水平分割 */
+.split { margin: 0 8px; }
+
 /* 轮播 默认(750 * 240) */
 body.home .swipe { position: relative; overflow: hidden; padding-top: 32%; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
 body.home .swipe > .wrap { position: absolute; left: 0; top: 0; overflow: hidden; }
@@ -12,10 +15,10 @@ body.home nav .item { color: #333; line-height: 1; }
 body.home nav .item img { display: block; width: 95px; height: 95px; margin: auto auto 15px; }
 
 /* 头图 */
-body.game .banner { padding-top: 64%; }
-body.game .banner .list { position: absolute; width: 100%; bottom: 140px; margin: 0; }
+body.game .banner { padding-top: 64%; /* padding-top: 50% */ }
+body.game .banner .list { position: absolute; width: 100%; bottom: 28%; margin: 0; }
 body.game .banner .list .item { background: transparent; color: #fff; }
-body.game .banner .flexbox { position: absolute; height: 120px; bottom: 0; width: 100%; line-height: 1; background-color: rgba(255, 255, 255, 0.1); }
+body.game .banner .flexbox { position: absolute; height: 24%; bottom: 0; width: 100%; line-height: 1; background-color: rgba(255, 255, 255, 0.1); }
 body.game .banner .flexbox .item { color: #fff; }
 body.game .banner .flexbox .item:not(:last-child) { border-right: 1px solid rgba(255, 255, 255, 0.5); }
 body.game .banner .flexbox .item p { margin-bottom: 10px; }
@@ -31,6 +34,7 @@ body.game #introduce .item { background-size: 0 0, 0 0, 0 0, 0 0; }
 body.game #introduce .action { cursor: pointer; margin: 20px 0 0; }
 body.game #introduce .content { display: none; }
 body.game #introduce .content p { margin-bottom: 20px; }
+body.game .dot { margin: 0 10px; }
 
 /* 图窗 */
 body.game #showcase { background-color: #fff; }

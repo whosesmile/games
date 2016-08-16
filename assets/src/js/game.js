@@ -1,11 +1,25 @@
-// 游戏列表
+// 全部游戏
+(function () {
+  if (location.pathname !== '/games') {
+    return false;
+  }
+
+  loadMoreFactory({
+    url: '/games/ajax/list',
+    panel: '#games',
+    template: 'home/games.html'
+  });
+
+})();
+
+// 分类游戏
 (function () {
   if (location.pathname.indexOf('/games/') !== 0) {
     return false;
   }
 
   loadMoreFactory({
-    url: '/games/ajax/:type',
+    url: '/games/ajax/list?type=' + location.pathname.split('/')[2],
     panel: '#games',
     template: 'home/games.html'
   });

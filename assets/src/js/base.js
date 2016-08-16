@@ -40,11 +40,38 @@
  * 配置模板
  */
 (function (global) {
+
+  // 格式化日期
+  var format = function (date, fmt) { //author: meizz
+    var o = {
+      "M+": date.getMonth() + 1, //月份
+      "d+": date.getDate(), //日
+      "h+": date.getHours(), //小时
+      "m+": date.getMinutes(), //分
+      "s+": date.getSeconds(), //秒
+      "q+": Math.floor((date.getMonth() + 3) / 3), //季度
+      "S": date.getMilliseconds() //毫秒
+    };
+    if (/(y+)/i.test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+    }
+    for (var k in o)
+      if (new RegExp("(" + k + ")").test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+      }
+    return fmt;
+  };
+
   var env = nunjucks.configure();
 
   // 增加全局过滤器
   env.addFilter('example', function (input) {
     return input;
+  });
+
+  // 日期格式
+  env.addFilter('date', function (date, fmt) {
+    return format(new Date(date), fmt);
   });
 
   // 对外提供句柄
@@ -450,6 +477,10 @@
     // 预先执行 - 微信内部scroll event不停止 不调用
     loadmore.appendTo('body');
 
+    if ($(options.panel).children().length < size) {
+      loadmore.remove();
+    }
+
     // 注册回调
     return listenScroll(function () {
       return new Promise(function (resolve, reject) {
@@ -457,6 +488,7 @@
           return resolve(null);
         }
 
+        loadmore.appendTo('body');
         $.get(options.url, {
           page: ++page,
           size: size,

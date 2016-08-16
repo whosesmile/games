@@ -6,5 +6,5 @@ var router = module.exports = new Router({
 
 // profile
 router.get('/', async(ctx, next) => {
-  ctx.body = await ctx.render('index.html');
+  ctx.body = ctx.render('index.html');
 });

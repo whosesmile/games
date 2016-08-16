@@ -1,0 +1,29 @@
+<aside>
+  <ul>
+    <li ui-sref-active="active">
+      <a class="menu"><i class="glyphicon glyphicon-leaf"></i>手游分类<i class="glyphicon glyphicon-menu-right text-muted"></i></a>
+      <ul>
+        <li ng-class="{active: ('type'|isState)}"><a ui-sref="type">手游分类</a></li>
+      </ul>
+    </li>
+    <li ui-sref-active="active">
+      <a class="menu"><i class="glyphicon glyphicon-th-large"></i>手游管理<i class="glyphicon glyphicon-menu-right text-muted"></i></a>
+      <ul>
+        <li ng-class="{active: ('list'|isState)}"><a ui-sref="list">手游列表</a></li>
+        <li ng-class="{active: ('game'|isState)}"><a ui-sref="game">新增手游</a></li>
+      </ul>
+    </li>
+    <li ui-sref-active="active">
+      <a class="menu"><i class="glyphicon glyphicon-cloud"></i>新游推荐<i class="glyphicon glyphicon-menu-right text-muted"></i></a>
+      <ul>
+        <li ng-class="{active: ('news'|isState)}"><a ui-sref="news">新游推荐</a></li>
+      </ul>
+    </li>
+    <li ui-sref-active="active">
+      <a class="menu"><i class="glyphicon glyphicon-flag"></i>精品推荐<i class="glyphicon glyphicon-menu-right text-muted"></i></a>
+      <ul>
+        <li ng-class="{active: ('lamp'|isState)}"><a ui-sref="lamp">精品推荐</a></li>
+      </ul>
+    </li>
+  </ul>
+</aside>

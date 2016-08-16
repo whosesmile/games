@@ -1,0 +1,74 @@
+<div class="title">
+  <h2 ng-if="model.id">编辑手游</h2>
+  <h2 ng-if="!model.id">新增手游</h2>
+</div>
+<form class="form" name="form" ng-submit="create()">
+  <div class="form-group">
+    <label><i class="text-danger">*</i> 名称：</label>
+    <input type="text" class="form-control" placeholder="请输入游戏名称" ng-model="model.name" required />
+  </div>
+  <div class="form-group">
+    <label><i class="text-danger">*</i> 图标：</label>
+    <upload name="model.logo"></upload>
+  </div>
+  <div class="form-group">
+    <label><i class="text-danger">*</i> 横幅：</label>
+    <upload class="banner" name="model.banner"></upload>
+  </div>
+  <div class="form-group">
+    <label><i class="text-danger">*</i> 风格：</label>
+    <input type="text" class="form-control" placeholder="请输入游戏风格" ng-model="model.style" required />
+  </div>
+  <div class="form-group">
+    <label><i class="text-danger">*</i> 类型：</label>
+    <select class="form-control" ng-model="model.typeId" ng-options="type.id as type.name for type in types" required>
+      <option value="">请选择游戏类型</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label><i class="text-danger">*</i> 大小：</label>
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="请输入游戏大小(MB)" ng-model="model.size" required />
+      <div class="input-group-addon">MB</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label><i class="text-danger">*</i> 比例：</label>
+    <input type="number" class="form-control" placeholder="请输入充值比例" ng-model="model.ratio" required />
+  </div>
+  <div class="form-group">
+    <label><i class="text-danger">*</i> 排序：</label>
+    <input type="number" class="form-control" placeholder="请输入游戏排序" ng-model="model.sort" required />
+  </div>
+  <div class="form-group">
+    <label><i class="text-danger">*</i> 简介：</label>
+    <input type="text" class="form-control" placeholder="请输入游戏简介" ng-model="model.brief" required />
+  </div>
+  <div class="form-group">
+    <label><i class="text-danger">*</i> 描述：</label>
+    <textarea class="form-control" placeholder="请输入游戏描述信息" ng-model="model.describe" required rows="5"></textarea>
+  </div>
+  <div class="form-group">
+    <label><i class="text-danger">*</i> 评分：</label>
+    <input type="number" class="form-control" placeholder="请输入游戏评分" ng-model="model.score" required />
+  </div>
+  <div class="form-group">
+    <label><i class="text-danger">*</i> 标签：</label>
+    <input type="text" class="form-control" placeholder="请输入游戏标签 (使用空格分隔)" ng-model="model.label" required />
+  </div>
+  <div class="form-group">
+    <label><i class="text-danger">*</i> 图库：</label>
+    <picture list="model.pictures"></picture>
+  </div>
+  <div class="form-group">
+    <label>安卓下载地址：</label>
+    <input type="url" class="form-control" placeholder="请输入安卓下载地址" ng-model="model.android" />
+  </div>
+  <div class="form-group">
+    <label>苹果下载地址：</label>
+    <input type="url" class="form-control" placeholder="请输入苹果下载地址" ng-model="model.iphone" />
+  </div>
+  <div class="form-group text-left">
+    <button class="btn btn-primary submit" ng-disabled="form.$invalid">提交</button>
+  </div>
+</form>

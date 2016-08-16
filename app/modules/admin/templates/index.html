@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8" />
+    <title>传奇手游 - 管理后台</title>
+    <link rel="stylesheet" type="text/css" href="{{ 'assets/vendor/bootstrap/css/bootstrap.min.css'|version }}" />
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/admin.css'|version }}" />
+    <script src="{{ '/assets/vendor/jquery.min.js'|version }}"></script>
+    <script src="{{ '/assets/vendor/angular.min.js'|version }}"></script>
+    <script src="{{ '/assets/vendor/angular-router.min.js'|version }}"></script>
+    <script src="{{ '/assets/vendor/angular-resource.min.js'|version }}"></script>
+    <script src="{{ '/assets/vendor/ui-bootstrap.min.js'|version }}"></script>
+    <script src="{{ '/assets/js/admin.js'|version }}"></script>
+  </head>
+  <body>
+    <div id="header">
+      <h1 class="pull-left"><img class="logo" src="/assets/images/logo.png" />传奇手游</h1>
+      <div class="pull-right">
+        <div class="settings">
+          <a href="">登出</a>
+        </div>
+      </div>
+    </div>
+    <div id="content">
+      <menubar></menubar>
+      <div class="main" ui-view></div>
+    </div>
+  </body>
+</html>

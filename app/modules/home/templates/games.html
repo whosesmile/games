@@ -1,7 +1,10 @@
 {% set clazz = "games" %}
-{% set title = "动作游戏" %}
+{% set title = type.name|default('精品') + "游戏" %}
 {% extends layout %}
 {% import macro as macro %}
+{% block style %}
+  <link rel="stylesheet" href="{{ '/assets/css/game.css'|version }}" />
+{% endblock %}
 {% block content %}
   {% if not nested %}
     <header class="bar" ui-mode="header">
@@ -11,51 +14,24 @@
   {% endif %}
   <section>
     <div id="games" class="list" ui-mode="compact overlap">
-      {% for item in [1,2,3,4,5] %}
-        <a class="item" ui-mode="20px" href="/game/:id">
+      {% for item in list %}
+        <a class="item" ui-mode="20px" href="/game/{{ item.id }}">
           <div class="avatar" ui-mode="20px">
-            <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/8d2e0ebafac2f8a542e94113662d9a97.jpg" ui-mode="110px" />
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" ui-mode="110px" data-src="{{ item.logo }}" />
           </div>
           <div class="text">
-            <span class="text-md">保卫萝卜3</span>
-            <p class="brief">休闲益智 | 2016-07发布</p>
-            <p class="brief">萌翻世界的塔防游戏</p>
+            <span class="text-md">{{ item.name }}</span>
+            <p class="brief">充值比例 1:{{ item.ratio }}</p>
+            <p class="brief">{{ item.brief }}</p>
           </div>
           <div class="pull-right">
-            <button class="button" ui-mode="default xs inline imitate">查看</button>
-          </div>
-        </a>
-        <a class="item" ui-mode="20px" href="/game/:id">
-          <div class="avatar" ui-mode="20px">
-            <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/a6f5eace235500672d1fbb201fb292f0.jpg" ui-mode="110px" />
-          </div>
-          <div class="text">
-            <span class="text-md">全民斗战神</span>
-            <p class="brief">APRG | 2016-07发布</p>
-            <p class="brief">腾讯首款变身战斗手游</p>
-          </div>
-          <div class="pull-right">
-            <button class="button" ui-mode="default xs inline imitate">查看</button>
-          </div>
-        </a>
-        <a class="item" ui-mode="20px" href="/game/:id">
-          <div class="avatar" ui-mode="20px">
-            <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/393060c5df8a8fe03362eadb94f1b9e8.jpg" ui-mode="110px" />
-          </div>
-          <div class="text">
-            <span class="text-md">御龙在天</span>
-            <p class="brief">MMO | 2016-07发布</p>
-            <p class="brief">三国纷争 皇权由你掌握</p>
-          </div>
-          <div class="pull-right">
-            <button class="button" ui-mode="default xs inline imitate">查看</button>
+            <button class="button" ui-mode="default xs inline imitate">进入</button>
           </div>
         </a>
       {% endfor %}
     </div>
   </section>
 {% endblock %}
-
 {% block script %}
   <script src="{{ '/assets/js/game.js'|version }}"></script>
 {% endblock %}

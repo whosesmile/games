@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <a class="close" ng-click="$dismiss()">&times;</a>
+  <h4 class="modal-title">新增分类</h4>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal" autocomplete="off">
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <i class="text-danger">*</i> 分类名称：
+      </label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" name="name" placeholder="请输入分类名称" ng-model="model.name" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <i class="text-danger">*</i> 分类排序：
+      </label>
+      <div class="col-sm-7">
+        <input type="number" class="form-control" name="sort" placeholder="请输入分类排序" ng-model="model.sort" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <i class="text-danger">*</i> 分类图标：
+      </label>
+      <div class="col-sm-7">
+        <upload name="model.logo"></upload>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-success" type="button" ng-click="confirm()">提交</button>
+  <button class="btn btn-default" type="button" ng-click="$dismiss()">取消</button>
+</div>

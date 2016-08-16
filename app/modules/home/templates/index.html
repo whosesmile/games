@@ -1,4 +1,5 @@
 {% set clazz = "home" %}
+{% set title = "传奇手游" %}
 {% extends layout %}
 {% import macro as macro %}
 {% block style %}
@@ -8,7 +9,7 @@
   {% if not nested %}
     <header class="bar" ui-mode="header">
       {{ macro.back() }}
-      <h1 class="title">手游传奇</h1>
+      <h1 class="title">{{ title }}</h1>
     </header>
   {% endif %}
   <section>
@@ -21,33 +22,35 @@
         {% endfor %}
       </div>
     </div>
-    <nav class="flexbox compact text-center text-sm text-dark">
-      <a class="item" href="/games/:type">
-        <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/83212f1822318bc89566684ef213c749.png" />
-        <span>角色</span>
-      </a>
-      <a class="item" href="/games/:type">
-        <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/8c72abde2586fc620e4f57d38bb2f9ef.png" />
-        <span>动作</span>
-      </a>
-      <a class="item" href="/games/:type">
-        <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/b9a17adf2c88c710e33655fb1024f409.png" />
-        <span>休闲</span>
-      </a>
-      <a class="item" href="/games/:type">
-        <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/e4e0e27a5921e95c3e74f687a8f163aa.png" />
-        <span>棋牌</span>
-      </a>
-      <a class="item" href="/games/:type">
-        <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/9a190061f12e2e40e5722808142f0de4.png" />
-        <span>策略</span>
-      </a>
+    <nav class="flexbox text-center text-sm text-dark" ui-mode="compact">
+      {% for item in types %}
+        <a class="item" href="/games/{{ item.id }}">
+          <img src="{{ item.logo }}" />
+          <span>{{ item.name }}</span>
+        </a>
+      {% endfor %}
     </nav>
     <div class="list">
       <div class="item-divider" ui-mode="15px sync">
         <span class="text text-black text-lg">新游</span>
-        <a class="text-gray text-sm" href="">更多<i class="icon text-gray">&#xe60b;</i></span>
+        <a class="text-gray text-sm" href="/games">更多<i class="icon text-gray">&#xe60b;</i></a>
       </div>
+      {% for item in leads %}
+        <a class="item" ui-mode="20px" href="/game/{{ item.id }}">
+          <div class="avatar" ui-mode="20px">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" ui-mode="110px" data-src="{{ item.logo }}" />
+          </div>
+          <div class="text">
+            <span class="text-md">{{ item.name }}</span>
+            <p class="brief">充值比例 1:{{ item.ratio }}</p>
+            <p class="brief">{{ item.brief }}</p>
+          </div>
+          <div class="pull-right">
+            <button class="button" ui-mode="default xs inline imitate">查看</button>
+          </div>
+        </a>
+      {% endfor %}
+      {#
       <a class="item" ui-mode="20px" href="/game/:id">
         <div class="avatar" ui-mode="20px">
           <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/8d2e0ebafac2f8a542e94113662d9a97.jpg" ui-mode="110px" />
@@ -87,51 +90,31 @@
           <button class="button" ui-mode="default xs inline imitate">查看</button>
         </div>
       </a>
+      #}
     </div>
     <div class="list">
       <div class="item-divider" ui-mode="15px sync">
         <span class="text text-black text-lg">精品</span>
-        <a class="text-gray text-sm" href="">更多<i class="icon text-gray">&#xe60b;</i></span>
+        <a class="text-gray text-sm" href="/games">更多<i class="icon text-gray">&#xe60b;</i></a>
       </div>
-      <a class="item" ui-mode="20px" href="/game/:id">
-        <div class="avatar" ui-mode="20px">
-          <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/8d2e0ebafac2f8a542e94113662d9a97.jpg" ui-mode="110px" />
-        </div>
-        <div class="text">
-          <span class="text-md">保卫萝卜3</span>
-          <p class="brief">休闲益智 | 2016-07发布</p>
-          <p class="brief">萌翻世界的塔防游戏</p>
-        </div>
-        <div class="pull-right">
-          <button class="button" ui-mode="default xs inline imitate">查看</button>
-        </div>
-      </a>
-      <a class="item" ui-mode="20px" href="/game/:id">
-        <div class="avatar" ui-mode="20px">
-          <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/a6f5eace235500672d1fbb201fb292f0.jpg" ui-mode="110px" />
-        </div>
-        <div class="text">
-          <span class="text-md">全民斗战神</span>
-          <p class="brief">APRG | 2016-07发布</p>
-          <p class="brief">腾讯首款变身战斗手游</p>
-        </div>
-        <div class="pull-right">
-          <button class="button" ui-mode="default xs inline imitate">查看</button>
-        </div>
-      </a>
-      <a class="item" ui-mode="20px" href="/game/:id">
-        <div class="avatar" ui-mode="20px">
-          <img src="http://7xjyap.com2.z0.glb.qiniucdn.com/393060c5df8a8fe03362eadb94f1b9e8.jpg" ui-mode="110px" />
-        </div>
-        <div class="text">
-          <span class="text-md">御龙在天</span>
-          <p class="brief">MMO | 2016-07发布</p>
-          <p class="brief">三国纷争 皇权由你掌握</p>
-        </div>
-        <div class="pull-right">
-          <button class="button" ui-mode="default xs inline imitate">查看</button>
-        </div>
-      </a>
+      {% for item in ranks %}
+        <a class="item" ui-mode="20px" href="/game/{{ item.id }}">
+          <div class="avatar" ui-mode="20px">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" ui-mode="110px" data-src="{{ item.logo }}" />
+          </div>
+          <div class="text">
+            <span class="text-md">{{ item.name }}</span>
+            <p class="brief">充值比例 1:{{ item.ratio }}</p>
+            <p class="brief">{{ item.brief }}</p>
+          </div>
+          <div class="pull-right">
+            <button class="button" ui-mode="default xs inline imitate">查看</button>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+    <div class="vspace text-center">
+      <a class="button" ui-mode="default inline xs" href="/games">更多游戏 <i class="icon">&#xe60b;</i></a>
     </div>
   </section>
 {% endblock %}

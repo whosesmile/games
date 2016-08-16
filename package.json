@@ -11,11 +11,15 @@
   "dependencies": {
     "html-minifier": "^2.1.5",
     "koa": "^2.0.0",
+    "koa-body": "^1.4.0",
     "koa-router": "^7.0.1",
     "koa-static-cache": "^3.1.7",
     "lodash": "^4.13.1",
     "moment": "^2.14.1",
+    "mysql": "^2.11.1",
     "nunjucks": "^2.4.2",
+    "qiniu": "^6.1.11",
+    "sequelize": "^3.23.6",
     "winston": "^2.2.0"
   },
   "devDependencies": {

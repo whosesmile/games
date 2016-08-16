@@ -34,5 +34,7 @@ _site
 upload
 .svnignore
 assets/dist
+assets/src/js/admin/templates.js
 config.js
 lib
+legend.sql

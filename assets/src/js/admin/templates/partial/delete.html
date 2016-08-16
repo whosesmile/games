@@ -1,0 +1,9 @@
+<div class="modal-header">
+  <a class="close" ng-click="$dismiss()">&times;</a>
+  <h4 class="modal-title">{{ title || '警告' }}</h4>
+</div>
+<div class="modal-body" ng-bind-html="message"></div>
+<div class="modal-footer">
+  <button class="btn btn-danger" type="button" ng-click="confirm()">{{ confirmText || '删除' }}</button>
+  <button class="btn btn-default" type="button" ng-click="$dismiss()">取消</button>
+</div>
