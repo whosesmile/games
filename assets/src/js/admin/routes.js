@@ -54,3 +54,8 @@ app.controller('newsController', function ($scope) {
 app.controller('lampController', function ($scope) {
 
 });
+
+// 账户管理
+app.controller('adminController', function ($scope, Mixin, Admin) {
+  Mixin($scope, Admin, 'partial/admin.html');
+});

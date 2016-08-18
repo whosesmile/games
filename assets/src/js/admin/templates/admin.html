@@ -1,0 +1,47 @@
+<div class="title">
+  <h2>管理员列表</h2>
+</div>
+<div class="filter">
+  <div class="row">
+    <div class="col col-sm-9"></div>
+    <div class="col col-sm-3 text-right">
+      <a class="btn btn-success" ng-click="create()">+新增管理员</a>
+    </div>
+  </div>
+</div>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>账户</th>
+      <th>创建时间</th>
+      <th>更新时间</th>
+      <th>状态</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in list">
+      <td>{{ item.id }}</td>
+      <td>{{ item.account }}</td>
+      <td>{{ item.createdAt|date:'MM-dd hh:mm:ss' }}</td>
+      <td>{{ item.updatedAt|date:'MM-dd hh:mm:ss' }}</td>
+      <td ng-class="{'text-muted': !item.status, 'text-success': item.status}">{{ item.status|status }}</td>
+      <td>
+        <a class="toggle" ng-click="toggle(item)">{{ item.status|status:true }}</a>
+        <a ng-click="update(item)">编辑</a>
+        <a class="delete" ng-click="delete(item)">删除</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="loading" ng-if="!list">
+  <i></i>
+  <p class="text-muted text-xl">正在加载...</p>
+</div>
+<div class="text-center" ng-if="list.length == 0">
+  <p class="text-muted text-xl">暂无数据</p>
+</div>
+<div class="text-center" ng-show="list.length &amp;&amp; count > size">
+<ul uib-pagination boundary-links="true" boundary-link-numbers="true" max-size="5" total-items="count" items-per-page="size" ng-model="page" previous-text="上一页" next-text="下一页" first-text="首页" last-text="末页" ng-change="query()"></ul>
+</div>

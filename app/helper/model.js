@@ -66,6 +66,9 @@ function wrapfn(Proxy) {
       size = parseInt(size || 20, 10);
       clause = clause || {};
       return Proxy.findAndCountAll({
+        attributes: {
+          exclude: ['password', 'describe', 'pictures']
+        },
         offset: size * (page - 1),
         limit: size,
         order: clause.order || [
@@ -196,7 +199,7 @@ var Game = sequelize.define('game', {
     allowNull: false,
     comment: '图库',
     get: function () {
-      return JSON.parse(this.getDataValue('pictures'));
+      return JSON.parse(this.getDataValue('pictures') || null);
     },
     set: function (data) {
       this.setDataValue('pictures', JSON.stringify(data));

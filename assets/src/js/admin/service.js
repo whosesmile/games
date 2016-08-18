@@ -107,3 +107,13 @@ app.factory('Type', function ($resource) {
     }
   });
 });
+
+// 账户
+app.factory('Admin', function ($resource) {
+  return $resource('/admin/ajax/admin/:id', {}, {
+    list: {
+      isArray: false,
+      method: 'get',
+    }
+  });
+});

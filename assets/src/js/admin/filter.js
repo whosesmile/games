@@ -4,6 +4,6 @@ app.filter('status', function () {
     if (reverse) {
       status = !status;
     }
-    return status ? '上架' : '下架';
+    return status ? '上线' : '下线';
   };
 });

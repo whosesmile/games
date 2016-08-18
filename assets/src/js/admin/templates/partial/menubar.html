@@ -31,5 +31,11 @@
         <li ng-class="{active: ('lamp'|isState)}"><a ui-sref="lamp">精品推荐</a></li>
       </ul>
     </li>
+    <li ui-sref-active="active">
+      <a class="menu"><i class="glyphicon glyphicon-lock"></i>权限管理<i class="glyphicon glyphicon-menu-right text-muted"></i></a>
+      <ul>
+        <li ng-class="{active: ('admin'|isState)}"><a ui-sref="admin">权限管理</a></li>
+      </ul>
+    </li>
   </ul>
 </aside>

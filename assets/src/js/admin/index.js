@@ -95,5 +95,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       url: "/lamp",
       templateUrl: 'lamp.html',
       controller: 'lampController'
+    })
+    .state('admin', {
+      url: "/admin",
+      templateUrl: 'admin.html',
+      controller: 'adminController'
     });
 });
