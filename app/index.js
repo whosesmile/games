@@ -4,6 +4,8 @@ import Koa from 'koa';
 import path from 'path';
 import nunjucks from 'nunjucks';
 import parser from 'koa-body';
+import convert from 'koa-convert';
+import session from 'koa-session';
 import helper from './helper';
 import config from './config';
 import assets from 'koa-static-cache';
@@ -14,6 +16,16 @@ import logger from './helper/logger';
 
 // init koa 2.0
 const app = module.exports = new Koa();
+
+// convert generator to promise
+const use = app.use;
+app.use = function (g) {
+  return use.call(app, convert(g));
+};
+
+// config session based on cookie
+app.keys = ['P@LW9XXA@O10ZrXj~!]/mNHH98j/3yX R,?RT'];
+app.use(session(app));
 
 // config template
 const env = new nunjucks.Environment(new nunjucks.FileSystemLoader('app', {
@@ -113,13 +125,13 @@ app.use(async(ctx, next) => {
 // minify html
 app.use(minify({
   minifyJS: {
-    mangle: false
+    mangle: false,
   },
   minifyCSS: true,
   collapseWhitespace: true,
   keepClosingSlash: true,
   removeComments: true,
-  processScripts: []
+  processScripts: [],
 }));
 
 // parse form
@@ -130,7 +142,7 @@ app.use(parser({
   textLimit: 1024 * 1024 * 2, // 2MB
   multipart: true,
   formidable: {
-    uploadDir: path.join(__dirname, '../upload')
+    uploadDir: path.join(__dirname, '../upload'),
   }
 }));
 

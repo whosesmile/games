@@ -1,6 +1,7 @@
 <div class="modal-header">
   <a class="close" ng-click="$dismiss()">&times;</a>
-  <h4 class="modal-title">新增分类</h4>
+  <h4 class="modal-title" ng-if="!model.id">新增分类</h4>
+  <h4 class="modal-title" ng-if="model.id">编辑分类</h4>
 </div>
 <div class="modal-body">
   <form class="form-horizontal" autocomplete="off">

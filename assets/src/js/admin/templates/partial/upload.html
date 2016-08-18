@@ -1,5 +1,5 @@
 <div class="upload">
-  <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" ng-src="{{ name }}"/>
-  +上传图片
+  <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" ng-src="{{ name }}" ng-style="{width: width / (scale || 1.8), height: height / (scale || 1.8)}" />
+  +上传图片 ( {{ width || 108 }} x {{ height || 108 }} )
   <input type="file" accept="image/*" />
 </div>

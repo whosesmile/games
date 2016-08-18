@@ -50,8 +50,9 @@ global.cacheDisabled = async(ctx, next) => {
  * 管理员拦截器
  */
 global.adminRequired = async(ctx, next) => {
-  if (true) {
+  if (ctx.session.admin) {
     return await next();
   }
+  return ctx.redirect('/admin/login');
   ctx.status = 403;
 };

@@ -1,0 +1,46 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8" />
+    <title>传奇手游 - 管理后台</title>
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/vendor/bootstrap/css/bootstrap.min.css'|version }}" />
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/admin.css'|version }}" />
+    <script src="{{ '/assets/vendor/jquery.min.js'|version }}"></script>
+  </head>
+  <body class="login">
+    <div id="login">
+      <div class="content center-block">
+        <form method="post" name="form" autocomplete="off">
+          <h3 class="form-title"><img src="{{ '/assets/images/logo.png'|version }}"> 传奇手游平台</h3>
+          {% if error %}
+            <div class="alert alert-danger">
+              <button type="button" class="close" title="关闭" onclick="$(this).parent().remove()">×</button>
+              <span class="ng-binding"><i class="glyphicon glyphicon-info-sign"></i>{{ error }}</span>
+            </div>
+          {% endif %}
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="glyphicon glyphicon-envelope"></i>
+              </div>
+              <input class="form-control" type="text" placeholder="账号" name="account" autofocus required />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="glyphicon glyphicon-lock"></i>
+              </div>
+              <input class="form-control" type="password" placeholder="密码" name="password" required />
+            </div>
+          </div>
+          <div class="form-group text-center">
+            <button class="btn btn-success btn-block" type="submit">立即登录</button>
+          </div>
+        </form>
+        <div class="copyright small text-center text-muted">2016 © 传奇手游</div>
+      </div>
+    </div>
+
+  </body>
+</html>

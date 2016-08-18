@@ -15,10 +15,10 @@
   <section>
     <div class="swipe" data-swipe="true">
       <div class="wrap">
-        {% for item in [1,2,3] %}
-          <div class="item">
-            <img class="center-block" src="http://7xjyap.com2.z0.glb.qiniucdn.com/b7d136f82803e20864cf52658f9711f7.jpeg" />
-          </div>
+        {% for item in banners %}
+          <a class="item" href="{{ item.link }}">
+            <img class="center-block" src="{{ item.image }}" />
+          </a>
         {% endfor %}
       </div>
     </div>

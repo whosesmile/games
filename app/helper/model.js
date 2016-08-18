@@ -84,8 +84,42 @@ function wrapfn(Proxy) {
         };
       });
     },
+
+    find: function (clause) {
+      return Proxy.findAll({
+        where: Object.assign({
+          deleted: false,
+        }, clause.where)
+      });
+    }
   };
 }
+
+// 管理员
+var Admin = sequelize.define('admin', {
+  account: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true,
+    comment: '账户',
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    comment: '密码',
+  },
+  status: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+    comment: '是否禁用',
+  },
+  deleted: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+});
 
 // 手游类型
 var Type = sequelize.define('type', {
@@ -204,6 +238,48 @@ var Game = sequelize.define('game', {
   },
 });
 
+// 推荐
+var Banner = sequelize.define('banner', {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    comment: '名称',
+  },
+  image: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    comment: '图片',
+  },
+  link: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    comment: '地址',
+  },
+  place: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    comment: '位置',
+  },
+  sort: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+    comment: '排序',
+  },
+  status: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+    comment: '是否上架',
+  },
+  deleted: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+    comment: '是否删除',
+  },
+});
+
 // one to many
 Type.hasMany(Game, {
   as: 'games'
@@ -214,17 +290,31 @@ if (require.main === module) {
   // Type.sync({
   //   force: true
   // });
-  Game.sync({
-    force: true
-  });
+  // Game.sync({
+  //   force: true
+  // });
+  // Admin.sync({
+  //   force: true
+  // });
+  // Admin.create({
+  //   account: 'legend',
+  //   password: 'b0c0572d84aa96ed48a5f4c5bad18a17358c07f7f7fd349474edd6e3b8798ed520b0dc8d6b6c8a1f886df0a90ad769419fdbb17a0684c1f6963b9ad9e8a16f84'
+  // });
+  // Banner.sync({
+  //   force: true
+  // });
 }
 
 exports.model = {
   Type: Type,
   Game: Game,
+  Banner: Banner,
+  Admin: Admin,
 };
 
 exports.proxy = {
   type: wrapfn(Type),
   game: wrapfn(Game),
+  admin: wrapfn(Admin),
+  banner: wrapfn(Banner),
 };

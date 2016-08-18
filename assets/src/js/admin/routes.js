@@ -1,6 +1,8 @@
 // 首页
-app.controller('homeController', function ($scope) {
-
+app.controller('homeController', function ($scope, Mixin, Banner, CONS_PLACES) {
+  Mixin($scope, Banner, 'partial/banner.html', {
+    places: CONS_PLACES
+  });
 });
 
 // 手游分类
@@ -11,14 +13,6 @@ app.controller('typeController', function ($scope, Mixin, Type) {
 // 手游列表
 app.controller('listController', function ($scope, Mixin, Game) {
   Mixin($scope, Game, 'partial/list.html');
-
-  $scope.toggle = function (model) {
-    Game.save(Object.assign({}, model, {
-      status: !model.status
-    }), function (data) {
-      model.status = !model.status;
-    });
-  };
 });
 
 // 新增手游

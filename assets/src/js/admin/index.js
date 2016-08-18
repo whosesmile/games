@@ -49,6 +49,12 @@ app.config(function ($httpProvider) {
   // });
 });
 
+// 常量 - 推荐位置
+app.constant('CONS_PLACES', [{
+  name: '首页',
+  value: 'home'
+}]);
+
 // 声明路由
 app.config(function ($stateProvider, $urlRouterProvider) {
 

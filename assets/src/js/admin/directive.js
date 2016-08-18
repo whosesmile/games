@@ -1,4 +1,15 @@
 /* 左侧菜单 */
+app.directive('whatAreYouLookingFor', function ($state) {
+  return {
+    restrict: 'E',
+    scope: {
+      name: '@',
+    },
+    templateUrl: 'partial/boot.html',
+  };
+});
+
+/* 左侧菜单 */
 app.directive('menubar', function ($state) {
   return {
     restrict: 'E',
@@ -27,7 +38,10 @@ app.directive('upload', function ($state) {
   return {
     restrict: 'E',
     scope: {
-      name: '='
+      name: '=',
+      width: '@',
+      height: '@',
+      scale: '@',
     },
     templateUrl: 'partial/upload.html',
     link: function (scope, element, attrs) {

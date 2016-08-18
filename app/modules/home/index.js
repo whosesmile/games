@@ -19,10 +19,16 @@ router.get('/', async(ctx, next) => {
       status: true,
     }
   });
+  var banners = await orm.proxy.banner.list(1, 5, {
+    where: {
+      status: true,
+    },
+  });
   ctx.body = ctx.render('index.html', {
     types: types.list,
     leads: leads.list,
     ranks: ranks.list,
+    banners: banners.list,
   });
 });
 

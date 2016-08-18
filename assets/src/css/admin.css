@@ -8,23 +8,38 @@ body { background-color: #fff; font-size: 14px; color: #333; }
   from { transform: rotate(0) }
   to { transform: rotate(360deg) }
 }
+
+/* login */
+body.login { background: url(http://oba26vm79.bkt.clouddn.com/3203853fb8754d61545f3fe0068cc46d.jpg) center bottom/cover no-repeat fixed; overflow: hidden !important }
+#login .alert { padding: 8px 15px; font-size: 15px; }
+#login { position: absolute; top: 0; left: 0; right: 0; bottom: 0; font-size: 14px; display: flex; }
+#login .form { font-size: 14px }
+#login .form-title { margin-top: 20px; margin-bottom: 25px; line-height: 50px }
+#login .form-title img { width: 50px; height: 50px; margin-right: 10px; float: left; }
+#login .form-group p.text-danger { margin-top: 8px }
+#login .form-control { height: 36px }
+#login .form-control label { margin-bottom: 0 }
+#login .btn { font-size: 16px }
+#login .input-group-addon .fa { width: 14px }
+#login .input-group-addon .fa-lock { font-size: 18px }
+#login .content { box-shadow: 0 0 10px rgba(204, 204, 204, .8); background-color: #fff; padding: 20px 30px; border: 1px solid #ddd; border-radius: 5px; width: 340px; margin: auto; }
+#login .content .form-group { margin-bottom: 25px }
 .text-primary { color: #0ae; }
 .text-success { color: #00bb44; }
 .text-warning { color: #ff5a32; }
+.text-gray { color: #999; }
 .text-danger { color: #f4333c; }
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 .btn { font-weight: bold; }
 .table th { color: #999; font-weight: normal; border-bottom: none !important; }
 .table th, .table td { vertical-align: middle !important; }
 .table th:last-child, .table td:last-child { text-align: right; }
-.table img { width: 30px; height: 30px; }
 .table a { cursor: pointer; }
 .table a:not(:last-child) { border-right: 1px solid #337ab7; margin-right: 3px; padding-right: 5px; }
 .modal-footer .btn { min-width: 90px; font-size: 15px; }
 .upload { position: relative; overflow: hidden; color: #999; display: inline-block; vertical-align: top; }
 .upload img { display: inline-block; width: 60px; height: 60px; margin-right: 10px; border: 1px solid #ccc; border-radius: 3px; overflow: hidden; }
 .upload input { position: absolute; opacity: 0; font-size: 1000px; left: 0; top: 0; right: 0; bottom: 0; cursor: pointer; }
-.banner .upload img { width: 300px; height: 192px; }
 .text-xl { font-size: 16px; }
 .text-xxl { font-size: 18px; }
 .loading { padding: 20px 0; text-align: center; }
@@ -40,6 +55,7 @@ body { background-color: #fff; font-size: 14px; color: #333; }
 #header { position: fixed; top: 0; left: 0; width: 100%; background-color: #353E5F; color: #fff; padding: 0 20px; height: 50px; z-index: 1000; }
 #header h1 { font-size: 20px; margin: 0; padding: 5px 0; }
 #header .logo { display: inline-block; width: 40px; height: 40px; margin-right: 10px; }
+#header .name { font-size: 16px; margin-right: 10px; font-weight: 500; }
 #header .settings { line-height: 50px; }
 #header .settings a { color: #fff; font-weight: bold; font-size: 15px; }
 #content { margin-top: 50px; }

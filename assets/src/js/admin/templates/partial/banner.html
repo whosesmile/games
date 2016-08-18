@@ -1,0 +1,55 @@
+<div class="modal-header">
+  <a class="close" ng-click="$dismiss()">&times;</a>
+  <h4 class="modal-title" ng-if="!model.id">新增推荐</h4>
+  <h4 class="modal-title" ng-if="model.id">编辑推荐</h4>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal" autocomplete="off">
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <i class="text-danger">*</i> 推荐名称：
+      </label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" name="name" placeholder="请输入推荐名称" ng-model="model.name" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <i class="text-danger">*</i> 推荐位置：
+      </label>
+      <div class="col-sm-7">
+        <select class="form-control" name="place" ng-model="model.place" ng-options="item.value as item.name for item in places">
+          <option value="">请选择</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <i class="text-danger">*</i> 推荐排序：
+      </label>
+      <div class="col-sm-7">
+        <input type="number" class="form-control" name="sort" placeholder="请输入推荐排序" ng-model="model.sort" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <i class="text-danger">*</i> 推荐图片：
+      </label>
+      <div class="col-sm-7">
+        <upload name="model.image" width="750" height="240" scale="2.358"></upload>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">
+        <i class="text-danger">*</i> 链接地址：
+      </label>
+      <div class="col-sm-7">
+        <input type="url" class="form-control" name="link" placeholder="请输入链接地址" ng-model="model.link" />
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-success" type="button" ng-click="confirm()">提交</button>
+  <button class="btn btn-default" type="button" ng-click="$dismiss()">取消</button>
+</div>
