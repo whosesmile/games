@@ -17,6 +17,7 @@
       <th>名称</th>
       <th>风格</th>
       <th>大小</th>
+      <th>标签</th>
       <th>简介</th>
       <th>排序</th>
       <th>状态</th>
@@ -30,6 +31,7 @@
       <td>{{ item.name }}</td>
       <td>{{ item.style }}</td>
       <td>{{ item.size }}MB</td>
+      <td>{{ item.tag }}</td>
       <td>{{ item.brief|limitTo:20 }}...</td>
       <th>{{ item.sort }}</th>
       <td ng-class="{'text-muted': !item.status, 'text-success': item.status}">{{ item.status|status }}</td>

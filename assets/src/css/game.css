@@ -1,6 +1,9 @@
 /* 水平分割 */
 .split { margin: 0 8px; }
 
+/* 通用 */
+.list .item .text .tag { color: #fff; background-color: #f6081a; font-size: 22px; vertical-align: top; display: inline-block; border-radius: 5px; padding: 0 10px; margin-left: 5px; margin-top: 5px; }
+
 /* 轮播 默认(750 * 240) */
 body.home .swipe { position: relative; overflow: hidden; padding-top: 32%; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
 body.home .swipe > .wrap { position: absolute; left: 0; top: 0; overflow: hidden; }

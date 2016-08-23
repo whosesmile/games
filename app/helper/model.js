@@ -189,10 +189,14 @@ var Game = sequelize.define('game', {
     allowNull: false,
     comment: '评分',
   },
+  tag: {
+    type: Sequelize.STRING,
+    comment: '推广标签',
+  },
   label: {
     type: Sequelize.STRING,
     allowNull: false,
-    comment: '标签',
+    comment: '描述标签',
   },
   pictures: {
     type: Sequelize.TEXT,

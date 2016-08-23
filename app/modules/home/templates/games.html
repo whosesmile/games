@@ -20,7 +20,12 @@
             <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" ui-mode="110px" data-src="{{ item.logo }}" />
           </div>
           <div class="text">
-            <span class="text-md">{{ item.name }}</span>
+            <div class="text-md">
+              {{ item.name }}
+              {% if item.tag %}
+                <span class="tag">{{ item.tag }}</span>
+              {% endif %}
+            </div>
             <p class="brief">充值比例 1:{{ item.ratio }}</p>
             <p class="brief">{{ item.brief }}</p>
           </div>
