@@ -67,7 +67,7 @@ function wrapfn(Proxy) {
       clause = clause || {};
       return Proxy.findAndCountAll({
         attributes: {
-          exclude: ['password', 'describe', 'pictures']
+          exclude: ['password', 'describe']
         },
         offset: size * (page - 1),
         limit: size,
