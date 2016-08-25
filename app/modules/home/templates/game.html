@@ -72,7 +72,7 @@
       <div class="panel">
         {% for item in game.pictures %}
           <div class="item">
-            <img class="center-block" src="{{ item }}" />
+            <img class="center-block" src="{{ item|thumb(290, 435) }}" />
           </div>
         {% endfor %}
       </div>

@@ -60,10 +60,18 @@ module.exports = function (env) {
     return time ? moment(time).format(format) : null;
   });
 
-  // 分割
+  // split
   env.addFilter('split', function (str, symbols) {
     return str ? str.split(symbols || /[\s,]/).filter(function (item) {
       return item.trim().length > 0;
     }) : [];
+  });
+
+  // 七牛缩略图服务
+  env.addFilter('thumb', function (uri, width, height) {
+    if (uri && uri.indexOf('?') === -1) {
+      uri = uri + '?imageView2/2/w/' + width + '/h/' + height;
+    }
+    return uri;
   });
 };
