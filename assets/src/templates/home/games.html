@@ -1,7 +1,7 @@
 {% for item in list %}
   <a class="item" ui-mode="20px" href="/game/{{ item.id }}">
     <div class="avatar" ui-mode="20px">
-      <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" ui-mode="110px" data-src="{{ item.logo }}" />
+      <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" ui-mode="110px" data-src="{{ item.logo|thumb(108,108) }}" />
     </div>
     <div class="text">
       <div class="text-md">

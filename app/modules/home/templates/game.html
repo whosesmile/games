@@ -18,7 +18,7 @@
       <div class="list">
         <div class="item">
           <div class="avatar" ui-mode="20px">
-            <img src="{{ game.logo }}" ui-mode="110px" />
+            <img src="{{ game.logo|thumb(108,108) }}" ui-mode="110px" />
           </div>
           <span class="text text-xxl">
             {{ game.name }}
@@ -84,7 +84,7 @@
           {% for item in near %}
             <a class="item text-center" href="/game/{{ item.id }}">
               <div class="avatar">
-                <img class="center-block" src="{{ item.logo }}" />
+                <img class="center-block" src="{{ item.logo|thumb(108,108) }}" />
               </div>
               <div class="text-sm text-black text-ellipsis">{{ item.name }}</div>
             </a>
@@ -94,7 +94,7 @@
     {% endif %}
   </section>
   <footer class="bar" ui-mode="footer fixed flat">
-    <a class="button" ui-mode="success square" href="{{ game.android }}">进入游戏</a>
+    <a class="button" ui-mode="success square" href="{{ game.android }}">下载游戏</a>
   </footer>
 {% endblock %}
 {% block script %}
