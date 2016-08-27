@@ -42,8 +42,8 @@ body.game .dot { margin: 0 10px; }
 
 /* 图窗 */
 body.game #showcase { background-color: #fff; }
-body.game #showcase .panel { width: 100%; height: 475px; padding: 20px 10px; white-space: nowrap; overflow-y: hidden; overflow-x: scroll; -webkit-overflow-scrolling: touch; font-size: 0; }
-body.game #showcase .item { display: inline-block; width: 290px; height: 435px; margin: 0 10px; overflow: hidden; }
+body.game #showcase .panel { width: 100%; height: 535px; padding: 20px 10px; white-space: nowrap; overflow-y: hidden; overflow-x: scroll; -webkit-overflow-scrolling: touch; font-size: 0; }
+body.game #showcase .item { display: inline-block; width: 290px; height: 485px; margin: 0 10px; overflow: hidden; }
 
 /* 推荐 */
 body.game #promote .item .avatar { width: 90px; height: 90px; border-radius: 20px; overflow: hidden; margin: 0 auto; }
