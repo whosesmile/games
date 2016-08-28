@@ -19,7 +19,7 @@ body.home nav .item img { display: block; width: 95px; height: 95px; margin: aut
 
 /* 头图 */
 body.game .banner { background-color: #002442; padding-top: 64%; /* padding-top: 50% */ }
-body.game .banner:after { position: absolute; content: ''; top: 30%; left: 0; bottom: 0; right: 0; background: linear-gradient(to bottom, rgba(0, 34, 64, 0), rgba(0, 34, 64, 1) 50%, rgba(0, 34, 64, 1)); }
+body.game .banner:after { position: absolute; content: ''; top: 30%; left: 0; bottom: 0; right: 0; background: linear-gradient(to bottom, rgba(0, 34, 64, 0), rgba(0, 34, 64, 1) 60%, rgba(0, 34, 64, 1)); }
 body.game .banner .list { position: absolute; width: 100%; bottom: 28%; margin: 0; z-index: 10; }
 body.game .banner .list .item { background: transparent; color: #fff; }
 body.game .banner .flexbox { position: absolute; height: 24%; bottom: 0; width: 100%; line-height: 1; background-color: rgba(255, 255, 255, 0.1); z-index: 10; }
