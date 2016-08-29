@@ -28,7 +28,7 @@ app.keys = ['P@LW9XXA@O10ZrXj~!]/mNHH98j/3yX R,?RT'];
 app.use(session(app));
 
 // config template
-const env = new nunjucks.Environment(new nunjucks.FileSystemLoader('/', {
+const env = new nunjucks.Environment(new nunjucks.FileSystemLoader(['app', 'lib'], {
   watch: config.watch,
 }));
 
