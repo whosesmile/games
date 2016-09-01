@@ -25,7 +25,7 @@ module.exports = function (fav, options) {
   var maxAge = options.maxAge === null ? 86400000 : Math.min(Math.max(0, options.maxAge), 31556926000);
 
   return async(ctx, next) => {
-    if ('/favicon.ico' !== ctx.path) {
+    if (!ctx.path.includes('/favicon.ico')) {
       return await next();
     }
 

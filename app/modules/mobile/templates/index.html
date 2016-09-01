@@ -1,0 +1,89 @@
+{% set clazz = "home" %}
+{% set title = "传奇手游" %}
+{% extends layout %}
+{% import macro as macro %}
+{% block style %}
+  <link rel="stylesheet" href="{{ '/assets/css/game.css'|version }}" />
+{% endblock %}
+{% block content %}
+  {% if not nested %}
+    <header class="bar" ui-mode="header">
+      {{ macro.back() }}
+      <h1 class="title">{{ title }}</h1>
+    </header>
+  {% endif %}
+  <section>
+    <div class="swipe" data-swipe="true">
+      <div class="wrap">
+        {% for item in banners %}
+          <a class="item" href="{{ item.link }}">
+            <img class="center-block" src="{{ item.image|thumb(750,240) }}" />
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+    <nav class="flexbox text-center text-sm text-dark" ui-mode="compact">
+      {% for item in types %}
+        <a class="item" href="/games/{{ item.id }}">
+          <img src="{{ item.logo }}" />
+          <span>{{ item.name }}</span>
+        </a>
+      {% endfor %}
+    </nav>
+    <div class="list">
+      <div class="item-divider" ui-mode="15px sync">
+        <span class="text text-black text-lg">新游</span>
+        <a class="text-gray text-sm" href="/games">更多<i class="icon text-gray">&#xe60b;</i></a>
+      </div>
+      {% for item in leads %}
+        <a class="item" ui-mode="20px" href="/game/{{ item.id }}">
+          <div class="avatar" ui-mode="20px">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" ui-mode="110px" data-src="{{ item.logo|thumb(108,108) }}" />
+          </div>
+          <div class="text">
+            <div class="text-md">
+              {{ item.name }}
+              {% if item.tag %}
+                <span class="tag">{{ item.tag }}</span>
+              {% endif %}
+            </div>
+            <p class="brief">充值比例 1:{{ item.ratio }}</p>
+            <p class="brief">{{ item.brief }}</p>
+          </div>
+          <div class="pull-right">
+            <button class="button" ui-mode="default xs inline imitate">查看</button>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+    <div class="list">
+      <div class="item-divider" ui-mode="15px sync">
+        <span class="text text-black text-lg">精品</span>
+        <a class="text-gray text-sm" href="/games">更多<i class="icon text-gray">&#xe60b;</i></a>
+      </div>
+      {% for item in ranks %}
+        <a class="item" ui-mode="20px" href="/game/{{ item.id }}">
+          <div class="avatar" ui-mode="20px">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" ui-mode="110px" data-src="{{ item.logo|thumb(108,108) }}" />
+          </div>
+          <div class="text">
+            <div class="text-md">
+              {{ item.name }}
+              {% if item.tag %}
+                <span class="tag">{{ item.tag }}</span>
+              {% endif %}
+            </div>
+            <p class="brief">充值比例 1:{{ item.ratio }}</p>
+            <p class="brief">{{ item.brief }}</p>
+          </div>
+          <div class="pull-right">
+            <button class="button" ui-mode="default xs inline imitate">查看</button>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+    <div class="vspace text-center">
+      <a class="button" ui-mode="default inline xs" href="/games">更多游戏 <i class="icon">&#xe60b;</i></a>
+    </div>
+  </section>
+{% endblock %}

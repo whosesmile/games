@@ -37,6 +37,7 @@ filters(env);
 
 // config template global context
 env.addGlobal('layout', '../../../views/layout.html');
+env.addGlobal('main', '../../../views/main.html');
 env.addGlobal('macro', '../../../views/macro.html');
 
 // handle favicon

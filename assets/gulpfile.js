@@ -33,10 +33,10 @@ gulp.task('sync:source', function () {
 
 // px2rem css files
 gulp.task('px2rem', function () {
-  gulp.src(['src/css/admin.css'], {
+  gulp.src(['src/css/admin.css', 'src/css/legend.css'], {
     base: 'src'
   }).pipe(gulp.dest(target)).pipe(connect.reload());
-  return gulp.src(['src/css/**/*', '!src/css/admin.css'], {
+  return gulp.src(['src/css/**/*', '!src/css/admin.css', '!src/css/legend.css'], {
     base: 'src'
   }).pipe(px2rem()).pipe(gulp.dest(target)).pipe(connect.reload());
 });

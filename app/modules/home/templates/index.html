@@ -1,89 +1,272 @@
-{% set clazz = "home" %}
-{% set title = "传奇手游" %}
-{% extends layout %}
+{% extends main %}
 {% import macro as macro %}
 {% block style %}
-  <link rel="stylesheet" href="{{ '/assets/css/game.css'|version }}" />
+  <link rel="stylesheet" href="{{ '/assets/css/legend.css'|version }}" />
 {% endblock %}
 {% block content %}
-  {% if not nested %}
-    <header class="bar" ui-mode="header">
-      {{ macro.back() }}
-      <h1 class="title">{{ title }}</h1>
-    </header>
-  {% endif %}
-  <section>
-    <div class="swipe" data-swipe="true">
-      <div class="wrap">
-        {% for item in banners %}
-          <a class="item" href="{{ item.link }}">
-            <img class="center-block" src="{{ item.image|thumb(750,240) }}" />
-          </a>
-        {% endfor %}
+  <div id="header">
+    <div class="mainer">
+      <div class="wrapper">
+        <a class="logo" href="/">
+          <img src="/assets/images/logo.png" alt="传奇游戏" /> 传奇游戏
+        </a>
+        <div class="pull-right extra">
+          <span class="slogan">传奇你我，游戏人生！</span>
+          <ul class="list-unstyled list-inline">
+            <li><a href="">登录</a></li>
+            <li><a href="">注册</a></li>
+          </ul>
+        </div>
       </div>
     </div>
-    <nav class="flexbox text-center text-sm text-dark" ui-mode="compact">
-      {% for item in types %}
-        <a class="item" href="/games/{{ item.id }}">
-          <img src="{{ item.logo }}" />
-          <span>{{ item.name }}</span>
-        </a>
-      {% endfor %}
-    </nav>
-    <div class="list">
-      <div class="item-divider" ui-mode="15px sync">
-        <span class="text text-black text-lg">新游</span>
-        <a class="text-gray text-sm" href="/games">更多<i class="icon text-gray">&#xe60b;</i></a>
+    <div class="navigator">
+      <div class="wrapper">
+        <ul class="list-unstyled list-inline">
+          <li><a href="">首页</a></li>
+          <li><a href="">手机游戏</a></li>
+          <li><a href="">网页游戏</a></li>
+          <li><a href="">公益手游</a></li>
+        </ul>
       </div>
-      {% for item in leads %}
-        <a class="item" ui-mode="20px" href="/game/{{ item.id }}">
-          <div class="avatar" ui-mode="20px">
-            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" ui-mode="110px" data-src="{{ item.logo|thumb(108,108) }}" />
+    </div>
+  </div>
+  <div id="content">
+    <div class="wrapper">
+      <div class="box">
+        <div class="header">
+          <h3 class="title blue">热点推荐</h4>
+        </div>
+        <div class="content">
+          <div class="case2">
+            <ul class="list-unstyled list-inline ">
+              {% for item in [1] %}
+                <li class="shadow-hover">
+                  <a href="">
+                    <div class="figure">
+                      <img class="center-block" alt="" src="http://img0.c.yinyuetai.com/others/frontPageRec/160826/0/-M-0791ced727413e0f9b3bd62d99a57c36_0x0.jpg" />
+                    </div>
+                    <div class="info">
+                      <span class="avatar"><img src="http://img2.yytcdn.com/user/avatar/160806/14963065-1470458636918/-M-a5a1b91eae93a2d7e0c11374bad5fd2b_50x50.jpg"></span>
+                      <span class="name">TOMSON</span>
+                    </div>
+                    <p>一剑倾城，再剑倾国</p>
+                  </a>
+                </li>
+                <li class="shadow-hover">
+                  <a href="">
+                    <div class="figure">
+                      <img class="center-block" alt="" src="http://img1.c.yinyuetai.com/others/frontPageRec/160829/0/-M-0305a64b9de02283dcbddf51ab1dc5c4_0x0.jpg" />
+                    </div>
+                    <div class="info">
+                      <span class="avatar"><img src="http://img1.c.yinyuetai.com/uploads/default/headImg/header56.gif"></span>
+                      <span class="name">TOMSON</span>
+                    </div>
+                    <p>一剑倾城，再剑倾国</p>
+                  </a>
+                </li>
+                <li class="shadow-hover">
+                  <a href="">
+                    <div class="figure">
+                      <img class="center-block" alt="" src="http://img0.c.yinyuetai.com/others/frontPageRec/160830/0/-M-64265355d68b5f40894fdd092381eef4_0x0.jpg" />
+                    </div>
+                    <div class="info">
+                      <span class="avatar"><img src="http://img2.yytcdn.com/user/avatar/160806/14963065-1470458636918/-M-a5a1b91eae93a2d7e0c11374bad5fd2b_50x50.jpg"></span>
+                      <span class="name">TOMSON</span>
+                    </div>
+                    <p>一剑倾城，再剑倾国</p>
+                  </a>
+                </li>
+                <li class="shadow-hover">
+                  <a href="">
+                    <div class="figure">
+                      <img class="center-block" alt="" src="http://img1.c.yinyuetai.com/others/frontPageRec/160829/0/-M-0305a64b9de02283dcbddf51ab1dc5c4_0x0.jpg" />
+                    </div>
+                    <div class="info">
+                      <span class="avatar"><img src="http://img1.c.yinyuetai.com/uploads/default/headImg/header56.gif"></span>
+                      <span class="name">TOMSON</span>
+                    </div>
+                    <p>一剑倾城，再剑倾国</p>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
           </div>
-          <div class="text">
-            <div class="text-md">
-              {{ item.name }}
-              {% if item.tag %}
-                <span class="tag">{{ item.tag }}</span>
-              {% endif %}
+        </div>
+      </div>
+      <div class="column">
+        <div class="main pull-left">
+          <div class="box">
+            <div class="header">
+              <h3 class="title green">公益手游</h4>
             </div>
-            <p class="brief">充值比例 1:{{ item.ratio }}</p>
-            <p class="brief">{{ item.brief }}</p>
-          </div>
-          <div class="pull-right">
-            <button class="button" ui-mode="default xs inline imitate">查看</button>
-          </div>
-        </a>
-      {% endfor %}
-    </div>
-    <div class="list">
-      <div class="item-divider" ui-mode="15px sync">
-        <span class="text text-black text-lg">精品</span>
-        <a class="text-gray text-sm" href="/games">更多<i class="icon text-gray">&#xe60b;</i></a>
-      </div>
-      {% for item in ranks %}
-        <a class="item" ui-mode="20px" href="/game/{{ item.id }}">
-          <div class="avatar" ui-mode="20px">
-            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" ui-mode="110px" data-src="{{ item.logo|thumb(108,108) }}" />
-          </div>
-          <div class="text">
-            <div class="text-md">
-              {{ item.name }}
-              {% if item.tag %}
-                <span class="tag">{{ item.tag }}</span>
-              {% endif %}
+            <div class="content">
+              <div class="case4">
+                <ul class="list-unstyled list-inline clearfix">
+                  {% for item in [1] %}
+                    <li class="shadow-hover">
+                      <a class="avatar" href="">
+                        <img alt="" class="center-block" src="http://7xjyap.com2.z0.glb.qiniucdn.com/4e08ad3a293b4aceae7b303de59ce2e2.png" />
+                      </a>
+                      <a class="title" href="">天天烈火3D BT版</a>
+                      <p>传奇PK手游战法道</p>
+                      <p>上线送VIP3 150000元宝</p>
+                      <div class="actions">
+                        <a href="" class="button default round"><i class="icon text-muted">&#xe615;</i> 查看详情</a>
+                        <a href="" class="button success round"><i class="icon text-white">&#xe612;</i> 立即下载</a>
+                      </div>
+                      <div class="qrcode">
+                        <img alt="" class="center-block" src="http://www.186sy.com/images/kdjb3.png" />
+                        <span class="text-muted">扫码下载</span>
+                      </div>
+                    </li>
+                    <li class="shadow-hover">
+                      <a class="avatar" href="">
+                        <img alt="" class="center-block" src="http://7xjyap.com2.z0.glb.qiniucdn.com/e87c236ecd3bc7437d1ce716d78c71ff.png" />
+                      </a>
+                      <a class="title" href="">天天烈火3D BT版</a>
+                      <p>传奇PK手游战法道</p>
+                      <p>上线送VIP3 150000元宝</p>
+                      <div class="actions">
+                        <a href="" class="button default round"><i class="icon text-muted">&#xe615;</i> 查看详情</a>
+                        <a href="" class="button success round"><i class="icon text-white">&#xe612;</i> 立即下载</a>
+                      </div>
+                      <div class="qrcode">
+                        <img alt="" class="center-block" src="http://www.186sy.com/images/kdjb3.png" />
+                        <span class="text-muted">扫码下载</span>
+                      </div>
+                    </li>
+                    <li class="shadow-hover">
+                      <a class="avatar" href="">
+                        <img alt="" class="center-block" src="http://7xjyap.com2.z0.glb.qiniucdn.com/fc4770f29ede6ea87997a8a51a5a83af.png" />
+                      </a>
+                      <a class="title" href="">天天烈火3D BT版</a>
+                      <p>传奇PK手游战法道</p>
+                      <p>上线送VIP3 150000元宝</p>
+                      <div class="actions">
+                        <a href="" class="button default round"><i class="icon text-muted">&#xe615;</i> 查看详情</a>
+                        <a href="" class="button success round"><i class="icon text-white">&#xe612;</i> 立即下载</a>
+                      </div>
+                      <div class="qrcode">
+                        <img alt="" class="center-block" src="http://www.186sy.com/images/kdjb3.png" />
+                        <span class="text-muted">扫码下载</span>
+                      </div>
+                    </li>
+                    <li class="shadow-hover">
+                      <a class="avatar" href="">
+                        <img alt="" class="center-block" src="http://7xjyap.com2.z0.glb.qiniucdn.com/4e08ad3a293b4aceae7b303de59ce2e2.png" />
+                      </a>
+                      <a class="title" href="">天天烈火3D BT版</a>
+                      <p>传奇PK手游战法道</p>
+                      <p>上线送VIP3 150000元宝</p>
+                      <div class="actions">
+                        <a href="" class="button default round"><i class="icon text-muted">&#xe615;</i> 查看详情</a>
+                        <a href="" class="button success round"><i class="icon text-white">&#xe612;</i> 立即下载</a>
+                      </div>
+                      <div class="qrcode">
+                        <img alt="" class="center-block" src="http://www.186sy.com/images/kdjb3.png" />
+                        <span class="text-muted">扫码下载</span>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
             </div>
-            <p class="brief">充值比例 1:{{ item.ratio }}</p>
-            <p class="brief">{{ item.brief }}</p>
           </div>
-          <div class="pull-right">
-            <button class="button" ui-mode="default xs inline imitate">查看</button>
+        </div>
+        <div class="side pull-right">
+          <div class="box">
+            <div class="header">
+              <h3 class="title purple">热点推荐</h4>
+            </div>
+            <div class="content">
+              <div class="case5">
+                <ul class="list-unstyled">
+                  {% for item in [1,2,3,4,5, 6] %}
+                    <li class="clearfix">
+                      <span class="avatar">
+                        <img class="center-block" src="http://m.25az.com/upload/icon/2016/08/17/0b2ebb575a21.png" />
+                      </span>
+                      <div class="text">
+                        <h4 class="title">火影忍者</h4>
+                        <div class="text-muted ellipsis">热血的青春，燃烧的斗志</div>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
           </div>
-        </a>
-      {% endfor %}
+        </div>
+      </div>
+      <div class="box">
+        <div class="header">
+          <h3 class="title">精品手游</h4>
+        </div>
+        <div class="content">
+          <div class="case3">
+            <ul class="list-unstyled list-inline">
+              {% for item in [1,2,3,4,5,6] %}
+                <li>
+                  <a class="avatar" href="" target="_blank">
+                    <img class="center-block" alt="妖刀少女异闻录" src="{{ 'http://oba26vm79.bkt.clouddn.com/80c36876e5c6e3edfa97d0f305186605.png?imageView2/2/w/108/h/108' }}" />
+                    <span>火影忍者</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="avatar" href="" target="_blank">
+                    <img class="center-block" alt="魔兽世界" src="{{ 'http://m.25az.com/upload/icon/2016/08/17/0b2ebb575a21.png' }}" />
+                    <span>魔兽世界</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="avatar" href="" target="_blank">
+                    <img class="center-block" alt="跑跑卡丁车" src="{{ 'http://m.25az.com/upload/icon/2016/08/15/79184087e84b.png' }}" />
+                    <span>跑跑卡丁车</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="avatar" href="" target="_blank">
+                    <img class="center-block" alt="妖刀少女异闻录" src="{{ 'http://oba26vm79.bkt.clouddn.com/80c36876e5c6e3edfa97d0f305186605.png?imageView2/2/w/108/h/108' }}" />
+                    <span>火影忍者</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="avatar" href="" target="_blank">
+                    <img class="center-block" alt="魔兽世界" src="{{ 'http://m.25az.com/upload/icon/2016/08/17/0b2ebb575a21.png' }}" />
+                    <span>魔兽世界</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="avatar" href="" target="_blank">
+                    <img class="center-block" alt="跑跑卡丁车" src="{{ 'http://m.25az.com/upload/icon/2016/08/15/79184087e84b.png' }}" />
+                    <span>跑跑卡丁车</span>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="vspace text-center">
-      <a class="button" ui-mode="default inline xs" href="/games">更多游戏 <i class="icon">&#xe60b;</i></a>
+  </div>
+  <div id="footer">
+    <div class="wrapper">
+      <div class="clearfix">
+        <div class="pull-left">
+          <span class="text-muted">
+            &copy; 传奇游戏<!-- &nbsp;京ICP备12006498号 -->
+          </span>
+          <span class="text-muted">合作QQ: 3520902339</span>
+          <span class="text-muted">联系邮箱: whosesmile#gmail.com</span>
+        </div>
+        <div class="pull-right">
+          <span class="links">
+            <a href="">关于我们</a>
+            <a href="">联系我们</a>
+            <a href="">版权声明</a>
+          </span>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
 {% endblock %}

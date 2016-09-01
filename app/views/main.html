@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ title|default('传奇手游 - 传奇你我，游戏人生！')}}</title>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <meta name="keywords" content="传奇手游,手游平台,手游私服,公益私服,手游福利,手游变态,手游礼包,手游BT,手机SF" />
+    <meta name="description" content="手游传奇是一个精心打造的手游平台，专注于手机游戏的推荐，提供给玩家更好的手游体验。让我们一起在游戏中镌刻下我们的名字，打造出属于我们的传奇！" />
+    <link rel="stylesheet" href="{{ '/assets/vendor/bootstrap/css/bootstrap.min.css'|version }}" />
+    {% block style %}{% endblock %}
+  </head>
+  <body class="{{ clazz }}">
+    {% block header %}{% endblock %}
+    {% block content %}{% endblock %}
+    {% block footer %}{% endblock %}
+    <script src="{{ '/assets/vendor/jquery.min.js'|version }}"></script>
+    <script src="{{ '/assets/vendor/bootstrap/js/bootstrap.min.js'|version }}"></script>
+    {% block script %}{% endblock %}
+
+    <!-- 百度统计 -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?2774e48c0e2d06098b2b5c46b574b8d3";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </body>
+</html>
