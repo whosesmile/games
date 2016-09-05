@@ -1,3 +1,4 @@
+var fs = require('fs');
 var path = require('path');
 var qiniu = require("qiniu");
 var crypto = require('crypto');
@@ -24,10 +25,10 @@ function uptoken(key) {
 module.exports = {
 
   // 七牛上传
-  upload: function (name, type, image) {
+  upload: function (name, image) {
     return new Promise(function (resolve, reject) {
       var extra = new qiniu.io.PutExtra();
-      var key = crypto.createHash('md5').update((Math.random() * 10000 + Date.now()).toFixed(0)).digest('hex') + path.extname(name);
+      var key = crypto.createHash('md5').update(fs.readFileSync(image)).digest('hex') + path.extname(name);
       qiniu.io.putFile(uptoken(key), key, image, extra, function (err, data) {
         if (err) {
           logger.error(err);

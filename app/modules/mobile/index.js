@@ -68,6 +68,7 @@ router.get('/game/:id', async(ctx, next) => {
   var game = await orm.proxy.game.get(ctx.params.id);
   var near = await orm.proxy.game.random(3, {
     where: {
+      status: true,
       id: {
         $ne: ctx.params.id
       }

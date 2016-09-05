@@ -14,7 +14,13 @@
   {% endif %}
   <section class="has-footer">
     <div class="banner autofix">
-      <img class="center-block" src="{{ game.banner }}" />
+      {% if game.banner %}
+        <img class="center-block" src="{{ game.banner }}" />
+      {% else %}
+        <div class="vague">
+          <img class="center-block" src="{{ game.logo }}" />
+        </div>
+      {% endif %}
       <div class="list">
         <div class="item">
           <div class="avatar" ui-mode="20px">

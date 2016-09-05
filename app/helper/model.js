@@ -12,7 +12,8 @@ var sequelize = new Sequelize(config.database.dbname, config.database.username, 
     min: 0,
     idle: 10000
   },
-  logging: logger.debug
+  logging: logger.debug,
+  timezone: '+08:00',
 });
 
 // 代理方法
@@ -22,7 +23,10 @@ function wrapfn(Proxy) {
       return Proxy.findOne({
         where: {
           id: id,
-        }
+        },
+        include: [{
+          all: true
+        }],
       }).then(function (data) {
         if (data === null) {
           return Promise.reject('not found');
@@ -32,20 +36,25 @@ function wrapfn(Proxy) {
     },
 
     save: function (data) {
+      var self = this;
+      if (typeof data.save === 'function') {
+        return data.save();
+      }
       if (data.id) {
         return Proxy.update(data, {
           where: {
             id: data.id
           }
+        }).then(function () {
+          return self.get(data.id);
         });
       }
       return Proxy.create(data);
     },
 
     delete: function (id) {
-      return this.save({
-        id: id,
-        deleted: true
+      return this.get(id).then(function (instance) {
+        return instance.destroy();
       });
     },
 
@@ -55,9 +64,7 @@ function wrapfn(Proxy) {
         offset: 0,
         limit: size || 3,
         order: [Sequelize.fn('RAND'), ],
-        where: Object.assign({
-          deleted: false,
-        }, clause.where)
+        where: clause.where
       });
     },
 
@@ -75,9 +82,7 @@ function wrapfn(Proxy) {
           ['sort', 'desc'],
           ['id', 'desc'],
         ],
-        where: Object.assign({
-          deleted: false,
-        }, clause.where),
+        where: clause.where,
       }).then(function (data) {
         return {
           list: data.rows,
@@ -90,9 +95,7 @@ function wrapfn(Proxy) {
 
     find: function (clause) {
       return Proxy.findAll({
-        where: Object.assign({
-          deleted: false,
-        }, clause.where)
+        where: clause.where
       });
     }
   };
@@ -111,24 +114,46 @@ var Admin = sequelize.define('admin', {
     allowNull: false,
     comment: '密码',
   },
+  sort: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+    comment: '排序规则',
+  },
   status: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: false,
     comment: '是否禁用',
   },
-  deleted: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-  },
+}, {
+  paranoid: true,
 });
 
-// 手游类型
+// 手游类别 (联网 单机 破解 变态 ...)
+var Category = sequelize.define('category', {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  sort: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+    comment: '排序规则',
+  },
+}, {
+  paranoid: true,
+  initialAutoIncrement: 101,
+});
+
+// 手游类型 (角色 动作 棋牌 策略 休闲 ...)
 var Type = sequelize.define('type', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
+    unique: true,
   },
   logo: {
     type: Sequelize.STRING,
@@ -140,11 +165,9 @@ var Type = sequelize.define('type', {
     defaultValue: 0,
     comment: '排序规则',
   },
-  deleted: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-  },
+}, {
+  paranoid: true,
+  initialAutoIncrement: 101
 });
 
 // 手游
@@ -161,22 +184,25 @@ var Game = sequelize.define('game', {
   },
   banner: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
     comment: '横幅',
   },
   style: {
     type: Sequelize.STRING,
     allowNull: false,
+    defaultValue: 'RPG',
     comment: '风格：MORPG',
   },
   size: {
     type: Sequelize.STRING,
     allowNull: false,
+    defaultValue: '100.0',
     comment: '下载包大小',
   },
   brief: {
     type: Sequelize.STRING,
     allowNull: false,
+    defaultValue: '暂未填写',
     comment: '简介',
   },
   describe: {
@@ -187,6 +213,7 @@ var Game = sequelize.define('game', {
   score: {
     type: Sequelize.INTEGER,
     allowNull: false,
+    defaultValue: 4,
     comment: '评分',
   },
   tag: {
@@ -196,6 +223,7 @@ var Game = sequelize.define('game', {
   label: {
     type: Sequelize.STRING,
     allowNull: false,
+    defaultValue: '精彩纷呈 等你来战 传奇你我 游戏人生',
     comment: '描述标签',
   },
   pictures: {
@@ -237,12 +265,14 @@ var Game = sequelize.define('game', {
     defaultValue: false,
     comment: '是否上架',
   },
-  deleted: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-    comment: '是否删除',
+  remark: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    comment: '备注信息',
   },
+}, {
+  paranoid: true,
+  initialAutoIncrement: 1001
 });
 
 // 推荐
@@ -279,37 +309,71 @@ var Banner = sequelize.define('banner', {
     defaultValue: false,
     comment: '是否上架',
   },
-  deleted: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-    comment: '是否删除',
-  },
+}, {
+  paranoid: true,
 });
 
 // one to many
 Type.hasMany(Game, {
   as: 'games'
-})
+});
+
+// many to many
+Category.belongsToMany(Game, {
+  through: 'games_categories'
+});
+Game.belongsToMany(Category, {
+  through: 'games_categories'
+});
 
 // 如果单独运行 则重建表结构
 if (require.main === module) {
-  // Type.sync({
-  //   force: true
-  // });
-  // Game.sync({
-  //   force: true
-  // });
-  // Admin.sync({
-  //   force: true
-  // });
-  // Admin.create({
-  //   account: 'legend',
-  //   password: 'b0c0572d84aa96ed48a5f4c5bad18a17358c07f7f7fd349474edd6e3b8798ed520b0dc8d6b6c8a1f886df0a90ad769419fdbb17a0684c1f6963b9ad9e8a16f84'
-  // });
-  // Banner.sync({
-  //   force: true
-  // });
+  sequelize.sync({
+    force: true
+  }).then(function () {
+    // 管理员
+    Admin.create({
+      account: 'legend',
+      password: 'b0c0572d84aa96ed48a5f4c5bad18a17358c07f7f7fd349474edd6e3b8798ed520b0dc8d6b6c8a1f886df0a90ad769419fdbb17a0684c1f6963b9ad9e8a16f84',
+      status: true,
+    });
+
+    // 游戏分类
+    Category.create({
+      name: '联网'
+    });
+    Category.create({
+      name: '单机'
+    });
+    Category.create({
+      name: '破解'
+    });
+    Category.create({
+      name: '变态'
+    });
+
+    // 游戏类型
+    Type.create({
+      name: '角色',
+      logo: '/assets/images/1.png',
+    });
+    Type.create({
+      name: '动作',
+      logo: '/assets/images/2.png',
+    });
+    Type.create({
+      name: '休闲',
+      logo: '/assets/images/3.png',
+    });
+    Type.create({
+      name: '棋牌',
+      logo: '/assets/images/4.png',
+    });
+    Type.create({
+      name: '策略',
+      logo: '/assets/images/5.png',
+    });
+  });
 }
 
 exports.model = {
@@ -317,6 +381,7 @@ exports.model = {
   Game: Game,
   Banner: Banner,
   Admin: Admin,
+  Category: Category,
 };
 
 exports.proxy = {
@@ -324,4 +389,5 @@ exports.proxy = {
   game: wrapfn(Game),
   admin: wrapfn(Admin),
   banner: wrapfn(Banner),
+  category: wrapfn(Category),
 };

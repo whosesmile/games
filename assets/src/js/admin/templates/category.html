@@ -1,11 +1,11 @@
 <div class="title">
-  <h2>推荐管理</h2>
+  <h2>手游类别</h2>
 </div>
 <div class="filter">
   <div class="row">
     <div class="col col-sm-9"></div>
     <div class="col col-sm-3 text-right">
-      <a class="btn btn-success" ng-click="create()">+新增推荐</a>
+      <a class="btn btn-success" ng-click="create()">+新增类别</a>
     </div>
   </div>
 </div>
@@ -14,9 +14,7 @@
     <tr>
       <th>#</th>
       <th>名称</th>
-      <th>图片</th>
       <th>排序</th>
-      <th>状态</th>
       <th>操作</th>
     </tr>
   </thead>
@@ -24,13 +22,9 @@
     <tr ng-repeat="item in list">
       <td>{{ item.id }}</td>
       <td>{{ item.name }}</td>
-      <td><img width="120" ng-src="{{ item.image }}" /></td>
       <td>{{ item.sort }}</td>
-      <td ng-class="{'text-muted': !item.status, 'text-success': item.status}">{{ item.status|status }}</td>
       <td>
-        <a class="toggle" ng-click="toggle(item)">{{ item.status|status:true }}</a>
-        <a href="/" target="_blank">预览</a>
-        <a ng-click="update(item)">编辑</a>
+        <a class="update" ng-click="update(item)">编辑</a>
         <a class="delete" ng-click="delete(item)">删除</a>
       </td>
     </tr>

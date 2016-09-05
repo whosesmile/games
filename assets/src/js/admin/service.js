@@ -1,17 +1,27 @@
 // 服务模板
-app.factory('Mixin', function ($uibModal) {
+app.factory('Mixin', function ($uibModal, $state) {
   return function (scope, proxy, templ, values) {
+    // PAGE参数
+    scope.page = $state.params.page;
+
+    // 翻页
+    scope.turnto = function () {
+      $state.go('list', {
+        page: scope.page,
+      });
+    };
 
     // 列表
     scope.query = function () {
       scope.list = null;
       proxy.list({
-        page: scope.page
+        page: scope.page || 1
       }, function (data) {
         Object.assign(scope, data);
       });
     };
 
+    // 自动翻页
     scope.query();
 
     // 新建
@@ -91,6 +101,16 @@ app.factory('Banner', function ($resource) {
 // 游戏
 app.factory('Game', function ($resource) {
   return $resource('/admin/ajax/game/:id', {}, {
+    list: {
+      isArray: false,
+      method: 'get',
+    }
+  });
+});
+
+// 类别
+app.factory('Category', function ($resource) {
+  return $resource('/admin/ajax/category/:id', {}, {
     list: {
       isArray: false,
       method: 'get',

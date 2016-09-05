@@ -49,6 +49,14 @@ app.config(function ($httpProvider) {
   // });
 });
 
+// 全局事件
+app.run(function ($state, $rootScope) {
+  $rootScope.$on('$stateChangeSuccess', function (e, to, toParams, from, fromParams) {
+    $state.previous = from;
+    $state.previous.params = fromParams;
+  });
+});
+
 // 常量 - 推荐位置
 app.constant('CONS_PLACES', [{
   name: '首页',
@@ -71,8 +79,13 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: 'type.html',
       controller: 'typeController'
     })
+    .state('category', {
+      url: "/category",
+      templateUrl: 'category.html',
+      controller: 'categoryController'
+    })
     .state('list', {
-      url: "/list",
+      url: "/list/:page",
       templateUrl: 'list.html',
       controller: 'listController'
     })

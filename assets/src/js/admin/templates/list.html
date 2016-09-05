@@ -37,7 +37,7 @@
       <td ng-class="{'text-muted': !item.status, 'text-success': item.status}">{{ item.status|status }}</td>
       <td>
         <a class="toggle" ng-click="toggle(item)">{{ item.status|status:true }}</a>
-        <a href="/game/{{ item.id }}" target="_blank">预览</a>
+        <a href="http://m.legendlife.cc/game/{{ item.id }}" target="_blank">预览</a>
         <a ui-sref="ugame({id: item.id})">编辑</a>
         <a class="delete" ng-click="delete(item)">删除</a>
       </td>
@@ -51,6 +51,6 @@
 <div class="text-center" ng-if="list.length == 0">
   <p class="text-muted text-xl">暂无数据</p>
 </div>
-<div class="text-center" ng-show="list.length &amp;&amp; count > size">
-<ul uib-pagination boundary-links="true" boundary-link-numbers="true" max-size="5" total-items="count" items-per-page="size" ng-model="page" previous-text="上一页" next-text="下一页" first-text="首页" last-text="末页" ng-change="query()"></ul>
+<div class="text-center" ng-if="list.length &amp;&amp; count > size">
+  <ul uib-pagination boundary-links="true" boundary-link-numbers="true" max-size="5" total-items="count" items-per-page="size" ng-model="$parent.page" previous-text="上一页" next-text="下一页" first-text="首页" last-text="末页" ng-change="turnto()"></ul>
 </div>

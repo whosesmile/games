@@ -43,144 +43,70 @@ router.post('/login', async(ctx, next) => {
   ctx.redirect('/admin');
 });
 
-/* 分类 */
+/* ================================================================================ */
 
-// list type
-router.get('/ajax/type', adminRequired, async(ctx, next) => {
-  var data = await orm.proxy.type.list(ctx.query.page, ctx.query.size);
-  return ctx.body = ctx.render(200, data);
-});
+/* 定制CRUD */
 
-// save type
-router.post('/ajax/type', adminRequired, async(ctx, next) => {
+// save admin
+router.post('/ajax/admin', adminRequired, async(ctx, next) => {
   var form = ctx.request.body;
-  var data = await orm.proxy.type.save(form);
-  return ctx.body = ctx.render(200, data);
-});
-
-// delete type
-router.delete('/ajax/type/:id', adminRequired, async(ctx, next) => {
-  var data = await orm.proxy.type.delete(ctx.params.id);
-  return ctx.body = ctx.render(200, data);
-});
-
-// get type
-router.get('/ajax/type/:id', adminRequired, async(ctx, next) => {
-  var data = await orm.proxy.type.get(ctx.params.id);
-  return ctx.body = ctx.render(200, data);
-});
-
-// save type
-router.post('/ajax/type/:id', adminRequired, async(ctx, next) => {
-  var form = ctx.request.body;
-  var data = await orm.proxy.type.save(form);
-  return ctx.body = ctx.render(200, data);
-});
-
-/* 游戏 */
-
-// list game
-router.get('/ajax/game', adminRequired, async(ctx, next) => {
-  var data = await orm.proxy.game.list(ctx.query.page, ctx.query.size);
+  if (form.password) {
+    form.password = crypto.createHash('sha512').update(form.password).digest('hex');
+  }
+  var data = await orm.proxy.admin.save(form);
   return ctx.body = ctx.render(200, data);
 });
 
 // save game
 router.post('/ajax/game', adminRequired, async(ctx, next) => {
   var form = ctx.request.body;
-  var data = await orm.proxy.game.save(form);
-  return ctx.body = ctx.render(200, data);
-});
-
-// delete game
-router.delete('/ajax/game/:id', adminRequired, async(ctx, next) => {
-  var data = await orm.proxy.game.delete(ctx.params.id);
-  return ctx.body = ctx.render(200, data);
-});
-
-// get game
-router.get('/ajax/game/:id', adminRequired, async(ctx, next) => {
-  var data = await orm.proxy.game.get(ctx.params.id);
-  return ctx.body = ctx.render(200, data);
-});
-
-// save game
-router.post('/ajax/game/:id', adminRequired, async(ctx, next) => {
-  var form = ctx.request.body;
-  var data = await orm.proxy.game.save(form);
-  return ctx.body = ctx.render(200, data);
-});
-
-/* 推荐 */
-
-// list banner
-router.get('/ajax/banner', adminRequired, async(ctx, next) => {
-  var data = await orm.proxy.banner.list(ctx.query.page, ctx.query.size);
-  return ctx.body = ctx.render(200, data);
-});
-
-// save banner
-router.post('/ajax/banner', adminRequired, async(ctx, next) => {
-  var form = ctx.request.body;
-  var data = await orm.proxy.banner.save(form);
-  return ctx.body = ctx.render(200, data);
-});
-
-// delete banner
-router.delete('/ajax/banner/:id', adminRequired, async(ctx, next) => {
-  var data = await orm.proxy.banner.delete(ctx.params.id);
-  return ctx.body = ctx.render(200, data);
-});
-
-// get banner
-router.get('/ajax/banner/:id', adminRequired, async(ctx, next) => {
-  var data = await orm.proxy.banner.get(ctx.params.id);
-  return ctx.body = ctx.render(200, data);
-});
-
-// save banner
-router.post('/ajax/banner/:id', adminRequired, async(ctx, next) => {
-  var form = ctx.request.body;
-  var data = await orm.proxy.banner.save(form);
-  return ctx.body = ctx.render(200, data);
-});
-
-/* 账户 */
-
-// list admin
-router.get('/ajax/admin', adminRequired, async(ctx, next) => {
-  var data = await orm.proxy.admin.list(ctx.query.page, ctx.query.size, {
-    order: [
-      ['id', 'asc']
-    ]
+  var game = await orm.proxy.game.save(form);
+  var categories = await orm.proxy.category.find({
+    where: {
+      id: {
+        $in: (form.categories || []).map(function (item) {
+          return item.id;
+        }),
+      }
+    }
   });
+  game.setCategories(categories);
+  await game.save();
+  return ctx.body = ctx.render(200, game);
+});
+
+/* ================================================================================ */
+
+/* 通用CRUD */
+
+// list
+router.get('/ajax/:model', adminRequired, async(ctx, next) => {
+  var data = await orm.proxy[ctx.params.model].list(ctx.query.page, ctx.query.size);
   return ctx.body = ctx.render(200, data);
 });
 
-// save admin
-router.post('/ajax/admin', adminRequired, async(ctx, next) => {
+// delete
+router.delete('/ajax/:model/:id', adminRequired, async(ctx, next) => {
+  var data = await orm.proxy[ctx.params.model].delete(ctx.params.id);
+  return ctx.body = ctx.render(200, data);
+});
+
+// get
+router.get('/ajax/:model/:id', adminRequired, async(ctx, next) => {
+  var data = await orm.proxy[ctx.params.model].get(ctx.params.id);
+  return ctx.body = ctx.render(200, data);
+});
+
+// save
+router.post('/ajax/:model', adminRequired, async(ctx, next) => {
   var form = ctx.request.body;
-  form.password = crypto.createHash('sha512').update(form.password).digest('hex');
-  var data = await orm.proxy.admin.save(form);
+  var data = await orm.proxy[ctx.params.model].save(form);
   return ctx.body = ctx.render(200, data);
 });
 
-// delete admin
-router.delete('/ajax/admin/:id', adminRequired, async(ctx, next) => {
-  var data = await orm.proxy.admin.delete(ctx.params.id);
-  return ctx.body = ctx.render(200, data);
-});
-
-// get admin
-router.get('/ajax/admin/:id', adminRequired, async(ctx, next) => {
-  var data = await orm.proxy.admin.get(ctx.params.id);
-  return ctx.body = ctx.render(200, data);
-});
-
-// save admin
-router.post('/ajax/admin/:id', adminRequired, async(ctx, next) => {
+// update
+router.post('/ajax/:model/:id', adminRequired, async(ctx, next) => {
   var form = ctx.request.body;
-  form.password = crypto.createHash('sha512').update(form.password).digest('hex');
-  var data = await orm.proxy.admin.save(form);
+  var data = await orm.proxy[ctx.params.model].save(form);
   return ctx.body = ctx.render(200, data);
 });

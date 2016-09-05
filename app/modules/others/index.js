@@ -17,7 +17,7 @@ router.post('/upload', async(ctx, next) => {
           var file = group[i];
           try {
             if (file.size) {
-              var path = await storage.upload(file.name, file.type, file.path);
+              var path = await storage.upload(file.name, file.path);
               list.push(path);
             }
           }
