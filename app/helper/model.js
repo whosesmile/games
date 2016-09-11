@@ -89,6 +89,7 @@ function wrapfn(Proxy) {
           count: data.count,
           page: page,
           size: size,
+          nums: Math.floor((data.count - 1) / size + 1),
         };
       });
     },
@@ -97,7 +98,17 @@ function wrapfn(Proxy) {
       return Proxy.findAll({
         where: clause.where
       });
-    }
+    },
+
+    all: function () {
+      return this.find({
+        where: {
+          id: {
+            $gt: 0
+          }
+        }
+      });
+    },
   };
 }
 
@@ -130,46 +141,6 @@ var Admin = sequelize.define('admin', {
   paranoid: true,
 });
 
-// 手游类别 (联网 单机 破解 变态 ...)
-var Category = sequelize.define('category', {
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  sort: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
-    comment: '排序规则',
-  },
-}, {
-  paranoid: true,
-  initialAutoIncrement: 101,
-});
-
-// 手游类型 (角色 动作 棋牌 策略 休闲 ...)
-var Type = sequelize.define('type', {
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  logo: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  sort: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
-    comment: '排序规则',
-  },
-}, {
-  paranoid: true,
-  initialAutoIncrement: 101
-});
-
 // 手游
 var Game = sequelize.define('game', {
   name: {
@@ -186,12 +157,6 @@ var Game = sequelize.define('game', {
     type: Sequelize.STRING,
     allowNull: true,
     comment: '横幅',
-  },
-  style: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    defaultValue: 'RPG',
-    comment: '风格：MORPG',
   },
   size: {
     type: Sequelize.STRING,
@@ -277,20 +242,26 @@ var Game = sequelize.define('game', {
 
 // 推荐
 var Banner = sequelize.define('banner', {
-  name: {
-    type: Sequelize.STRING,
+  game: {
+    type: Sequelize.TEXT,
     allowNull: false,
-    comment: '名称',
+    comment: '推荐游戏',
+    get: function () {
+      return JSON.parse(this.getDataValue('game') || null);
+    },
+    set: function (data) {
+      this.setDataValue('game', JSON.stringify(data));
+    },
+  },
+  summary: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+    comment: '描述',
   },
   image: {
     type: Sequelize.STRING,
     allowNull: false,
     comment: '图片',
-  },
-  link: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    comment: '地址',
   },
   place: {
     type: Sequelize.STRING,
@@ -313,8 +284,68 @@ var Banner = sequelize.define('banner', {
   paranoid: true,
 });
 
+// 手游类别 (联网 单机 破解 变态 ...)
+var Category = sequelize.define('category', {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  sort: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+    comment: '排序规则',
+  },
+}, {
+  paranoid: true,
+});
+
+// 手游类型 (角色 动作 棋牌 策略 休闲 ...)
+var Type = sequelize.define('type', {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  logo: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  sort: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+    comment: '排序规则',
+  },
+}, {
+  paranoid: true,
+});
+
+// 手游题材 (魔幻 三国 西游 仙侠 武侠 ...)
+var Theme = sequelize.define('theme', {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  sort: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+    comment: '排序规则',
+  },
+}, {
+  paranoid: true,
+});
+
 // one to many
 Type.hasMany(Game, {
+  as: 'games'
+});
+
+// one to many
+Theme.hasMany(Game, {
   as: 'games'
 });
 
@@ -325,6 +356,24 @@ Category.belongsToMany(Game, {
 Game.belongsToMany(Category, {
   through: 'games_categories'
 });
+
+exports.model = {
+  Type: Type,
+  Game: Game,
+  Theme: Theme,
+  Banner: Banner,
+  Admin: Admin,
+  Category: Category,
+};
+
+exports.proxy = {
+  type: wrapfn(Type),
+  theme: wrapfn(Theme),
+  game: wrapfn(Game),
+  admin: wrapfn(Admin),
+  banner: wrapfn(Banner),
+  category: wrapfn(Category),
+};
 
 // 如果单独运行 则重建表结构
 if (require.main === module) {
@@ -339,55 +388,31 @@ if (require.main === module) {
     });
 
     // 游戏分类
-    Category.create({
-      name: '联网'
+    var categories = ['联网', '单机', '破解', '变态'];
+    categories.forEach(function (name, index) {
+      Category.create({
+        name: name,
+        sort: categories.length - index
+      });
     });
-    Category.create({
-      name: '单机'
-    });
-    Category.create({
-      name: '破解'
-    });
-    Category.create({
-      name: '变态'
+
+    // 游戏题材
+    var themes = ['魔幻', '三国', '西游', '仙侠', '武侠', '历史', '战争', '体育', 'RPG', '3D', '卡牌', '策略', '动作', '经营', '跑酷', '都市', '放置', '其它'];
+    themes.forEach(function (name, index) {
+      Theme.create({
+        name: name,
+        sort: themes.length - index
+      });
     });
 
     // 游戏类型
-    Type.create({
-      name: '角色',
-      logo: '/assets/images/1.png',
-    });
-    Type.create({
-      name: '动作',
-      logo: '/assets/images/2.png',
-    });
-    Type.create({
-      name: '休闲',
-      logo: '/assets/images/3.png',
-    });
-    Type.create({
-      name: '棋牌',
-      logo: '/assets/images/4.png',
-    });
-    Type.create({
-      name: '策略',
-      logo: '/assets/images/5.png',
+    var types = ['角色扮演', '动作格斗', '休闲益智', '棋牌天地', '策略冒险', '飞行射击', '模拟养成', '卡牌对战', '塔防游戏', '赛车竞速', '其他'];
+    types.forEach(function (name, index) {
+      Type.create({
+        name: name,
+        logo: '/assets/images/' + (index + 1) + '.png',
+        sort: types.length - index
+      });
     });
   });
 }
-
-exports.model = {
-  Type: Type,
-  Game: Game,
-  Banner: Banner,
-  Admin: Admin,
-  Category: Category,
-};
-
-exports.proxy = {
-  type: wrapfn(Type),
-  game: wrapfn(Game),
-  admin: wrapfn(Admin),
-  banner: wrapfn(Banner),
-  category: wrapfn(Category),
-};

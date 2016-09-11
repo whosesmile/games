@@ -3,7 +3,29 @@
 </div>
 <div class="filter">
   <div class="row">
-    <div class="col col-sm-9"></div>
+    <div class="col col-sm-9">
+      <form class="form-inline" ng-submit="search()">
+        <div class="form-group">
+          <label for="name">名称：</label>
+          <input type="text" class="form-control" ng-model="params.name" id="name" placeholder="请输入游戏名称" />
+        </div>
+        <div class="form-group" style="margin-left:20px;">
+          <label for="name">状态：</label>
+          <select class="form-control" ng-model="params.status">
+            <option value="">全部</option>
+            <option value="1">在线</option>
+            <option value="0">下线</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-1">
+            <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">
+              <i class="glyphicon glyphicon-search"></i> 搜索
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
     <div class="col col-sm-3 text-right">
       <a class="btn btn-success" ui-sref="game">+新增游戏</a>
     </div>
@@ -18,7 +40,7 @@
       <th>风格</th>
       <th>大小</th>
       <th>标签</th>
-      <th>简介</th>
+      <th>更新时间</th>
       <th>排序</th>
       <th>状态</th>
       <th>操作</th>
@@ -28,11 +50,11 @@
     <tr ng-repeat="item in list">
       <td>{{ item.id }}</td>
       <td><img width="30" ng-src="{{ item.logo }}" /></td>
-      <td>{{ item.name }}</td>
+      <td><a href="http://m.legendlife.cc/game/{{ item.id }}" target="_blank" class="text-dark">{{ item.name }}</a></td>
       <td>{{ item.style }}</td>
       <td>{{ item.size }}MB</td>
-      <td>{{ item.tag }}</td>
-      <td>{{ item.brief|limitTo:20 }}...</td>
+      <td>{{ item.tag || '无' }}</td>
+      <td>{{ item.updatedAt|date:'MM-dd HH:mm' }}</td>
       <th>{{ item.sort }}</th>
       <td ng-class="{'text-muted': !item.status, 'text-success': item.status}">{{ item.status|status }}</td>
       <td>
@@ -52,5 +74,5 @@
   <p class="text-muted text-xl">暂无数据</p>
 </div>
 <div class="text-center" ng-if="list.length &amp;&amp; count > size">
-  <ul uib-pagination boundary-links="true" boundary-link-numbers="true" max-size="5" total-items="count" items-per-page="size" ng-model="$parent.page" previous-text="上一页" next-text="下一页" first-text="首页" last-text="末页" ng-change="turnto()"></ul>
+  <ul uib-pagination boundary-links="true" boundary-link-numbers="true" max-size="5" total-items="count" items-per-page="size" ng-model="$parent.page" previous-text="上一页" next-text="下一页" first-text="首页" last-text="末页" ng-change="query()"></ul>
 </div>

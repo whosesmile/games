@@ -4,6 +4,7 @@ import moment from 'moment';
 import util from 'util';
 import crypto from 'crypto';
 import config from '../config';
+import orm from './model';
 
 // 版本缓存
 var versions = {};
@@ -14,6 +15,27 @@ function abspath(input) {
 }
 
 module.exports = function (env) {
+
+  // theme: load from db
+  orm.proxy.theme.all().then(function (list) {
+    env.addFilter('theme', function (id) {
+      var theme = list.filter(function (item) {
+        return item.id == id;
+      })[0];
+      return theme ? theme.name : '未知';
+    });
+  });
+
+  // type: load from db
+  orm.proxy.type.all().then(function (list) {
+    env.addFilter('type', function (id) {
+      var type = list.filter(function (item) {
+        return item.id == id;
+      })[0];
+      return type ? type.name : '未知';
+    });
+  });
+
   // convert px to rem
   env.addFilter('flexible', function (style, base) {
     return env.getFilter('safe')(style.replace(/\b\d+(\.\d+)?px\b(?!(\s*\)|\s*"\]))/ig, function (match) {
@@ -53,6 +75,11 @@ module.exports = function (env) {
   // remove HTML tag
   env.addFilter('rmhtml', function (content) {
     return content.replace(/(<([^>]+)>)/ig, '');
+  });
+
+  // merge
+  env.addFilter('assign', function (...args) {
+    return Object.assign({}, ...args);
   });
 
   // date

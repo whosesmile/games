@@ -1,0 +1,141 @@
+{% set clazz = 'game' %}
+{% extends main %}
+{% import macro as macro %}
+{% block style %}
+  <link rel="stylesheet" href="{{ '/assets/css/legend.css'|version }}" />
+{% endblock %}
+{% block content %}
+  {% include "./partial/header.html" %}
+  <div id="content">
+    <div class="wrapper">
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="summary">
+            <div class="avatar pull-left">
+              <img class="center-block" src="{{ game.logo }}" />
+            </div>
+            <div class="digest">
+              <h1>{{ game.name }}</h1>
+              <div class="score">
+                <div class="starts">
+                  {% for item in range(game.score) %}
+                    <i class="icon text-yellow">&#xe60f;</i>
+                  {% endfor %}
+                  {% for item in range(5 - game.score) %}
+                    <i class="icon text-light">&#xe60f;</i>
+                  {% endfor %}
+                </div>
+                <span class="text-warning">{{ game.score }}分</span>
+              </div>
+              <dl class="clearfix">
+                <dt>状　态：</dt>
+                <dd>公测</dd>
+                <dt>风　格：</dt>
+                <dd>{{ game.themeId|theme }}</dd>
+                <dt>大　小：</dt>
+                <dd>{{ game.size }}MB</dd>
+                <dt>类　型：</dt>
+                <dd>{% for item in game.categories%}{{ item.name }}{% if not loop.last %}、{% endif %}{% endfor %}</dd>
+                <dt>时　间：</dt>
+                <dd>{{ game.createdAt|date('YYYY-MM-DD') }}</dd>
+                <dt>语　言：</dt>
+                <dd>中文、英语</dd>
+              </dl>
+              <div class="downloads clearfix">
+                {% if game.android %}
+                  <a href="{{ game.android }}" target="_blank" class="item android" nofollow>安卓下载</a>
+                {% else %}
+                  <a class="item android disabled" nofollow>安卓下载</a>
+                {% endif %}
+                {% if game.iphone %}
+                  <a href="{{ game.iphone }}" target="_blank" class="item iphone" nofollow>IOS下载</a>
+                {% else %}
+                  <a class="item iphone disabled" nofollow>IOS下载</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="aside col-sm-4">
+          <div class="box">
+            <div class="content">
+              <h3>热门推荐</h3>
+              <ul class="list-unstyled list-inline">
+                {% for item in side %}
+                  <li>
+                    <a class="avatar" href="/game/{{ item.id }}" >
+                      <img class="center-block" alt="{{ item.name }}" src="{{ item.logo }}" />
+                      <span>{{ item.name }}</span>
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="declare text-muted text-center">
+        声明：我站仅对该软件提供链接服务，本网站应用均来源于网络，版权问题均与我站无关。如果该软件触犯了您的权利，请发送邮件至whosesmile@gmail.com，我们将于24小时内删除
+      </div>
+      <div class="details">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#describe">游戏资料</a></li>
+          <!-- <li><a data-toggle="tab" href="#opening">开服信息</a></li> -->
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="describe">
+            <div class="article">
+              <h2>游戏介绍：</h2>
+              {{ game.describe|safe }}
+              <h2>游戏快照：</h2>
+              <div class="box-wrap antiscroll-wrap">
+                <div class="box">
+                  <div class="antiscroll-inner">
+                    <div class="box-inner">
+                      <div class="shows">
+                        <div class="panel">
+                          {% for item in game.pictures %}
+                            <div class="item"><img alt="{{ game.name }}" class="center-block" src="{{ item }}"></div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="opening">
+            <div class="article">
+              <p class="text-muted"><i class="icon">&#xe60e;</i> 很抱歉，开服时间尚未同步...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="header">
+          <h3 class="title">猜你喜欢</h4>
+        </div>
+        <div class="content">
+          <div class="case3">
+            <ul class="list-unstyled list-inline">
+              {% for item in near %}
+                <li>
+                  <a class="avatar" href="/game/{{ item.id }}" >
+                    <img class="center-block" alt="{{ item.name }}" src="{{ item.logo }}" />
+                    <span>{{ item.name }}</span>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include "./partial/footer.html" %}
+{% endblock %}
+{% block script %}
+  <script src="{{ '/assets/js/legend.js'|version }}"></script>
+{% endblock %}

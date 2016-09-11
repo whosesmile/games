@@ -74,6 +74,14 @@
     return format(new Date(date), fmt);
   });
 
+  // 七牛缩略图服务
+  env.addFilter('thumb', function (uri, width, height) {
+    if (uri && uri.indexOf('?') === -1) {
+      uri = uri + '?imageView2/2/w/' + width + '/h/' + height;
+    }
+    return uri;
+  });
+
   // 对外提供句柄
   global.template = env;
 

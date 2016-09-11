@@ -1,7 +1,7 @@
 <aside>
   <ul>
     <li ui-sref-active="active">
-      <a class="menu"><i class="glyphicon glyphicon-fire"></i>首页推荐<i class="glyphicon glyphicon-menu-right text-muted"></i></a>
+      <a class="menu"><i class="glyphicon glyphicon-fire"></i>推荐管理<i class="glyphicon glyphicon-menu-right text-muted"></i></a>
       <ul>
         <li ng-class="{active: ('home'|isState)}"><a ui-sref="home">推荐管理</a></li>
       </ul>
@@ -9,8 +9,9 @@
     <li ui-sref-active="active">
       <a class="menu"><i class="glyphicon glyphicon-th-large"></i>手游分类<i class="glyphicon glyphicon-menu-right text-muted"></i></a>
       <ul>
-        <li ng-class="{active: ('category'|isState)}"><a ui-sref="category">手游类别</a></li>
         <li ng-class="{active: ('type'|isState)}"><a ui-sref="type">手游类型</a></li>
+        <li ng-class="{active: ('category'|isState)}"><a ui-sref="category">手游类别</a></li>
+        <li ng-class="{active: ('theme'|isState)}"><a ui-sref="theme">手游题材</a></li>
       </ul>
     </li>
     <li ui-sref-active="active">

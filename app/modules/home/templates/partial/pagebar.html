@@ -1,0 +1,28 @@
+{% set spage = page - 3 %}
+{% set epage = page + 3 %}
+{% if spage <=0 %}
+  {% set epage = epage - (spage - 1) %}
+  {% set spage = 1 %}
+{% endif %}
+{% if epage > nums %}
+  {% set epage = nums %}
+{% endif %}
+{% if nums > 1 %}
+  <div class="text-center">
+    <ul class="pagination">
+      <li><a class="{% if page == 1 %}text-muted disabled{% endif %}" {% if page != 1 %}href="{{ macro.flatten('/games', params|assign({page: page - 1})) }}"{% endif %}>上一页</a></li>
+      {% if spage > 1 %}
+        <li><a href="{{ macro.flatten('/games', params|assign({page: 1})) }}">1</a></li>
+        <li><a class="disabled">...</a></li>
+      {% endif %}
+      {% for p in range(spage, epage + 1) %}
+        <li {% if p == page %}class="active"{% endif %}><a {% if p != page %}href="{{ macro.flatten('/games', params|assign({page: p})) }}"{% endif %}>{{ p }}</a></li>
+      {% endfor %}
+      {% if epage < nums %}
+        <li><a class="disabled">...</a></li>
+        <li><a href="{{ macro.flatten('/games', params|assign({page: nums})) }}">{{ nums }}</a></li>
+      {% endif %}
+      <li><a class="{% if page == nums %}text-muted disabled{% endif %}" {% if page != nums %}href="{{ macro.flatten('/games', params|assign({page: page + 1})) }}"{% endif %}>下一页</a></li>
+    </ul>
+  </div>
+{% endif %}

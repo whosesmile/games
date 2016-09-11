@@ -56,6 +56,13 @@ app.use(async(ctx, next) => {
   maxAge: 365 * 24 * 60 * 60,
 }));
 
+// elapsed time
+app.use(async(ctx, next) => {
+  var start = Date.now();
+  await next();
+  logger.info('Cost time:', Date.now() - start + ' by ' + ctx.path);
+});
+
 // in webview (weixin)
 app.use(async(ctx, next) => {
   var headers = ctx.headers || {};
@@ -67,40 +74,40 @@ app.use(async(ctx, next) => {
   await next();
 });
 
+// 模板方法 摘出来提速
+var render = function (name, ...args) {
+  // JSON
+  if (_.isNumber(name)) {
+    let [code, data] = [name, {}];
+
+    // 快捷消息模式
+    if (!_.isObject(args[0])) {
+      data.message = args[0];
+    }
+    return {
+      code: code,
+      data: Object.assign(...args, data),
+    };
+  }
+
+  // HTML
+  var module = path.dirname(helper.callsite()[6].getFileName());
+  var abspath = path.resolve(module, name);
+  // if not relative path and not repeat config view folder also, auto add view folder
+  if (!name.startsWith('.') && !name.startsWith(config.views)) {
+    abspath = path.resolve(module, config.views, name);
+  }
+  return env.render(abspath, Object.assign(...args));
+};
+
 // inject render method
 app.use(async(ctx, next) => {
-  ctx.render = function (name, ...args) {
-    // JSON
-    if (_.isNumber(name)) {
-      let [code, data] = [name, {}];
-
-      // 快捷消息模式
-      if (!_.isObject(args[0])) {
-        data.message = args[0];
-      }
-      return {
-        code: code,
-        data: _.defaults(data, ...args.reverse()),
-      };
-    }
-
-    // HTML
-    var module = path.dirname(helper.callsite()[6].getFileName());
-    var abspath = path.resolve(module, name);
-    // if not relative path and not repeat config view folder also, auto add view folder
-    if (!name.startsWith('.') && !name.startsWith(config.views)) {
-      abspath = path.resolve(module, config.views, name);
-    }
-
-    env.render(...[abspath, ...args]);
-    return env.render(...[abspath, ...args]);
-  };
+  ctx.render = render;
   await next();
 });
 
 // error handler
 app.use(async(ctx, next) => {
-  console.time('z');
   try {
     await next();
   }
@@ -120,7 +127,6 @@ app.use(async(ctx, next) => {
       ctx.body = ctx.render('./views/404.html');
     }
   }
-  console.timeEnd('z');
 });
 
 // minify html

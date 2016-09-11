@@ -57,6 +57,23 @@ router.post('/ajax/admin', adminRequired, async(ctx, next) => {
   return ctx.body = ctx.render(200, data);
 });
 
+// list game
+router.get('/ajax/game', adminRequired, async(ctx, next) => {
+  var where = {};
+  if (ctx.query.name) {
+    where.name = {
+      $like: '%' + ctx.query.name + '%'
+    };
+  }
+  if (ctx.query.status) {
+    where.status = ctx.query.status;
+  }
+  var data = await orm.proxy.game.list(ctx.query.page, ctx.query.size, {
+    where: where,
+  });
+  return ctx.body = ctx.render(200, data);
+});
+
 // save game
 router.post('/ajax/game', adminRequired, async(ctx, next) => {
   var form = ctx.request.body;
@@ -99,13 +116,6 @@ router.get('/ajax/:model/:id', adminRequired, async(ctx, next) => {
 
 // save
 router.post('/ajax/:model', adminRequired, async(ctx, next) => {
-  var form = ctx.request.body;
-  var data = await orm.proxy[ctx.params.model].save(form);
-  return ctx.body = ctx.render(200, data);
-});
-
-// update
-router.post('/ajax/:model/:id', adminRequired, async(ctx, next) => {
   var form = ctx.request.body;
   var data = await orm.proxy[ctx.params.model].save(form);
   return ctx.body = ctx.render(200, data);

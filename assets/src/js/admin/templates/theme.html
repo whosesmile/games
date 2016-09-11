@@ -1,11 +1,11 @@
 <div class="title">
-  <h2>推荐管理</h2>
+  <h2>手游题材</h2>
 </div>
 <div class="filter">
   <div class="row">
     <div class="col col-sm-9"></div>
     <div class="col col-sm-3 text-right">
-      <a class="btn btn-success" ng-click="create()">+新增推荐</a>
+      <a class="btn btn-success" ng-click="create()">+新增题材</a>
     </div>
   </div>
 </div>
@@ -13,28 +13,20 @@
   <thead>
     <tr>
       <th>#</th>
-      <th>LOGO</th>
       <th>名称</th>
-      <th>描述</th>
-      <th>位置</th>
       <th>排序</th>
-      <th>状态</th>
+      <th>更新时间</th>
       <th>操作</th>
     </tr>
   </thead>
   <tbody>
     <tr ng-repeat="item in list">
       <td>{{ item.id }}</td>
-      <td><img width="30" ng-src="{{ item.game.logo }}" /></td>
-      <td>{{ item.game.name }}</td>
-      <th>{{ item.summary }}</th>
-      <th>{{ item.place }}</th>
+      <td>{{ item.name }}</td>
       <td>{{ item.sort }}</td>
-      <td ng-class="{'text-muted': !item.status, 'text-success': item.status}">{{ item.status|status }}</td>
+      <td>{{ item.updatedAt|date:'MM-dd HH:mm' }}</td>
       <td>
-        <a class="toggle" ng-click="toggle(item)">{{ item.status|status:true }}</a>
-        <a href="/" target="_blank">预览</a>
-        <a ng-click="update(item)">编辑</a>
+        <a class="update" ng-click="update(item)">编辑</a>
         <a class="delete" ng-click="delete(item)">删除</a>
       </td>
     </tr>

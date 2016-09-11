@@ -1,13 +1,32 @@
 // 首页
-app.controller('homeController', function ($scope, Mixin, Banner, CONS_PLACES) {
+app.controller('homeController', function ($scope, Mixin, Banner, Game, CONS_PLACES) {
   Mixin($scope, Banner, 'partial/banner.html', {
-    places: CONS_PLACES
+    places: CONS_PLACES,
+    findGame: function (name) {
+      return Game.list({
+        page: 1,
+        size: 10,
+        name: name
+      }).$promise.then(function (data) {
+        return data.list;
+      });
+    },
+    validGame: function () {
+      if (!this.model.game || !this.model.game.id) {
+        return this.model.game = null;
+      }
+    },
   });
 });
 
 // 手游类别
 app.controller('categoryController', function ($scope, Mixin, Category) {
   Mixin($scope, Category, 'partial/category.html');
+});
+
+// 手游题材
+app.controller('themeController', function ($scope, Mixin, Theme) {
+  Mixin($scope, Theme, 'partial/theme.html');
 });
 
 // 手游分类
@@ -18,15 +37,26 @@ app.controller('typeController', function ($scope, Mixin, Type) {
 // 手游列表
 app.controller('listController', function ($scope, $state, Mixin, Game) {
   Mixin($scope, Game, 'partial/list.html');
+  $scope.search = function () {
+    $scope.page = 1;
+    $scope.query();
+  };
 });
 
 // 新增手游
-app.controller('gameController', function ($scope, $state, $window, filterFilter, Game, Category, Type) {
+app.controller('gameController', function ($scope, $state, $window, filterFilter, Game, Category, Type, Theme) {
   // 加载类型
   Category.list({
     size: 100
   }, function (data) {
     $scope.categories = data.list;
+  });
+
+  // 加载题材
+  Theme.list({
+    size: 100
+  }, function (data) {
+    $scope.themes = data.list;
   });
 
   // 加载分类
@@ -43,10 +73,6 @@ app.controller('gameController', function ($scope, $state, $window, filterFilter
   // 创建
   $scope.create = function () {
     Game.save($scope.model, function (data) {
-      // 后退为了保持分页状态
-      if ($state.previous.name === 'list') {
-        return $window.history.back();
-      }
       $state.go('list');
     });
   };

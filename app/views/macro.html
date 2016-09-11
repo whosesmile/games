@@ -9,3 +9,8 @@
     <a href="javascript:history.go(-1);"><i class="icon">&#xe608;</i></a>
   {% endif %}
 {% endmacro %}
+
+{% macro flatten(url, params) %}
+  {% set params = params|default({}) %}
+  {{ url }}/{{ params.page|default(1) }}-{{ params.sort|default(0) }}-{{ params.category|default(0) }}-{{ params.type|default(0) }}-{{ params.theme|default(0) }}
+{% endmacro %}

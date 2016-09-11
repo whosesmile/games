@@ -59,8 +59,14 @@ app.run(function ($state, $rootScope) {
 
 // 常量 - 推荐位置
 app.constant('CONS_PLACES', [{
-  name: '首页',
+  name: '头图',
   value: 'home'
+}, {
+  name: '一楼',
+  value: 'grape'
+}, {
+  name: '二楼',
+  value: 'cherry'
 }]);
 
 // 声明路由
@@ -79,13 +85,18 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: 'type.html',
       controller: 'typeController'
     })
+    .state('theme', {
+      url: "/theme",
+      templateUrl: 'theme.html',
+      controller: 'themeController'
+    })
     .state('category', {
       url: "/category",
       templateUrl: 'category.html',
       controller: 'categoryController'
     })
     .state('list', {
-      url: "/list/:page",
+      url: "/list",
       templateUrl: 'list.html',
       controller: 'listController'
     })

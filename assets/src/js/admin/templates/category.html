@@ -15,6 +15,7 @@
       <th>#</th>
       <th>名称</th>
       <th>排序</th>
+      <th>更新时间</th>
       <th>操作</th>
     </tr>
   </thead>
@@ -23,6 +24,7 @@
       <td>{{ item.id }}</td>
       <td>{{ item.name }}</td>
       <td>{{ item.sort }}</td>
+      <td>{{ item.updatedAt|date:'MM-dd HH:mm' }}</td>
       <td>
         <a class="update" ng-click="update(item)">编辑</a>
         <a class="delete" ng-click="delete(item)">删除</a>

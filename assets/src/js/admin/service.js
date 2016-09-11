@@ -2,21 +2,17 @@
 app.factory('Mixin', function ($uibModal, $state) {
   return function (scope, proxy, templ, values) {
     // PAGE参数
-    scope.page = $state.params.page;
+    scope.page = scope.page || $state.params.page;
 
-    // 翻页
-    scope.turnto = function () {
-      $state.go('list', {
-        page: scope.page,
-      });
-    };
+    // 查询参数
+    scope.params = scope.params || {};
 
     // 列表
     scope.query = function () {
       scope.list = null;
-      proxy.list({
+      proxy.list(angular.extend({}, scope.params, {
         page: scope.page || 1
-      }, function (data) {
+      }), function (data) {
         Object.assign(scope, data);
       });
     };
@@ -111,6 +107,16 @@ app.factory('Game', function ($resource) {
 // 类别
 app.factory('Category', function ($resource) {
   return $resource('/admin/ajax/category/:id', {}, {
+    list: {
+      isArray: false,
+      method: 'get',
+    }
+  });
+});
+
+// 题材
+app.factory('Theme', function ($resource) {
+  return $resource('/admin/ajax/theme/:id', {}, {
     list: {
       isArray: false,
       method: 'get',

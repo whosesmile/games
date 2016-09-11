@@ -7,7 +7,7 @@ var logger = require('./logger');
 // 七牛公开空间
 var qnconfig = {
   bucket: 'legend',
-  domain: 'http://oba26vm79.bkt.clouddn.com/',
+  domain: '//oba26vm79.bkt.clouddn.com/',
   access_key: 'thmRnsH3NxrfDgPrVTbJXtjEC25OhLVMQlS9traW',
   secret_key: 'Pu-p4MPd7sFDWFIqYKGouvNEtx1t8zNIIU6XUueX',
 };

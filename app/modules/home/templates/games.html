@@ -1,0 +1,78 @@
+{% set clazz = 'games' %}
+{% extends main %}
+{% import macro as macro %}
+{% block style %}
+  <link rel="stylesheet" href="{{ '/assets/css/legend.css'|version }}" />
+{% endblock %}
+{% block content %}
+  {% include "./partial/header.html" %}
+  <div id="content">
+    <div class="wrapper">
+      <div class="filter">
+        <dl class="clearfix">
+          <dt>游戏类型：</dt>
+          <dd><a href="{{ macro.flatten('/games', params|assign({page: 1, category: 0})) }}" {% if params.category == 0 %}class="selected"{% endif %}>全部</a></dd>
+          {% for item in categories %}
+            <dd><a href="{{ macro.flatten('/games', params|assign({page: 1, category: item.id})) }}" {% if params.category == item.id %}class="selected"{% endif %}>{{ item.name }}</a></dd>
+          {% endfor %}
+        </dl>
+        <dl class="clearfix">
+          <dt>游戏品类：</dt>
+          <dd><a href="{{ macro.flatten('/games', params|assign({page: 1, type: 0})) }}" {% if params.type == 0 %}class="selected"{% endif %}>全部</a></dd>
+          {% for item in types %}
+            <dd><a href="{{ macro.flatten('/games', params|assign({page: 1, type: item.id})) }}" {% if params.type == item.id %}class="selected"{% endif %}>{{ item.name }}</a></dd>
+          {% endfor %}
+        </dl>
+        <dl class="clearfix">
+          <dt>游戏题材：</dt>
+          <dd><a href="{{ macro.flatten('/games', params|assign({page: 1, theme: 0})) }}" {% if params.theme == 0 %}class="selected"{% endif %}>全部</a></dd>
+          {% for item in themes %}
+            <dd><a href="{{ macro.flatten('/games', params|assign({page: 1, theme: item.id})) }}" {% if params.theme == item.id %}class="selected"{% endif %}>{{ item.name }}</a></dd>
+          {% endfor %}
+        </dl>
+      </div>
+      <div class="tools clearfix">
+        <div class="sorter pull-left">
+          <a href="{{ macro.flatten('/games', params|assign({page: 1, sort: 0})) }}" {% if params.sort == 0 %}class="selected"{% endif %}>默认</a>
+          <a href="{{ macro.flatten('/games', params|assign({page: 1, sort: 1})) }}" {% if params.sort == 1 %}class="selected"{% endif %}>好评</a>
+          <a href="{{ macro.flatten('/games', params|assign({page: 1, sort: 2})) }}" {% if params.sort == 2 %}class="selected"{% endif %}>时间</a>
+        </div>
+        <div class="mpager pull-right">
+          <span class="text"><b>{{ page }}</b><em>/</em><i>{{ nums }}</i></span>
+          <a class="prev {% if page == 1 %}text-muted disabled{% endif %}" {% if page != 1 %}href="{{ macro.flatten('/games', params|assign({page: page - 1})) }}"{% endif %}>上一页</a>
+          <a class="next {% if page == nums %}text-muted disabled{% endif %}" {% if page != nums %}href="{{ macro.flatten('/games', params|assign({page: page + 1})) }}"{% endif %}>下一页</a>
+        </div>
+      </div>
+      {% if list.length %}
+        <div class="case6">
+          <ul class="list-unstyled list-inline clearfix">
+            {% for item in list %}
+              <li class="shadow-hover">
+                <a href="/game/{{ item.id }}">
+                  <div class="clearfix">
+                    <div class="avatar pull-left">
+                      <img alt="{{ item.name }}" class="center-block" src="{{ item.logo }}" />
+                    </div>
+                    <div class="summary">
+                      <h3 class="title ellipsis">{{ item.name }}</h3>
+                      <p class="ellipsis">{{ item.updatedAt|date('YYYY-MM-DD') }} | {{ item.size }}MB</p>
+                      <p class="ellipsis actions clearfix">
+                        <span>{{ item.typeId|type }} | {{ item.themeId|theme }}</span>
+                        <button class="btn btn-default pull-right">查看详情</button>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="brief text-muted ellipsis">简介: {{ item.brief }}</div>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% else %}
+        <div class="text-center text-muted"><i class="icon">&#xe60e;</i> 很抱歉，没有检索到相关数据。</div>
+      {% endif %}
+      {% include "./partial/pagebar.html" %}
+    </div>
+  </div>
+  {% include "./partial/footer.html" %}
+{% endblock %}

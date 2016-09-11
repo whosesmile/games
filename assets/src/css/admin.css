@@ -29,6 +29,7 @@ body.login { background: url(http://oba26vm79.bkt.clouddn.com/622382e090df0d630e
 .text-warning { color: #ff5a32; }
 .text-gray { color: #999; }
 .text-danger { color: #f4333c; }
+.text-dark { color: #333; }
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 .btn { font-weight: bold; }
 .table th { color: #999; font-weight: normal; border-bottom: none !important; }

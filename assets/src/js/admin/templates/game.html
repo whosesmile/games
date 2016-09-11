@@ -34,6 +34,12 @@
     </select>
   </div>
   <div class="form-group">
+    <label><i class="text-danger">*</i> 题材：</label>
+    <select class="form-control" ng-model="model.themeId" ng-options="theme.id as theme.name for theme in themes" required>
+      <option value="">请选择游戏题材</option>
+    </select>
+  </div>
+  <div class="form-group">
     <label><i class="text-danger">*</i> 大小：</label>
     <div class="input-group">
       <input type="text" class="form-control" placeholder="请输入游戏大小(MB)" ng-model="model.size" required />
