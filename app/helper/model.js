@@ -78,6 +78,7 @@ function wrapfn(Proxy) {
         },
         offset: size * (page - 1),
         limit: size,
+        include: clause.include || [],
         order: clause.order || [
           ['sort', 'desc'],
           ['id', 'desc'],

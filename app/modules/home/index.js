@@ -59,18 +59,65 @@ router.get('/game/:id', async(ctx, next) => {
 
 // games
 router.get('/games/:page-:sort-:category-:type-:theme', async(ctx, next) => {
+  // 转换成数字 便于计算
+  Object.keys(ctx.params).map(function (key) {
+    ctx.params[key] = parseInt(ctx.params[key], 10);
+  });
+
+  var params = ctx.params;
+  var size = 24;
+  var page = params.page;
+  var include = [];
+  var where = {
+    status: true,
+  };
+
   var types = await orm.proxy.type.all();
   var themes = await orm.proxy.theme.all();
   var categories = await orm.proxy.category.all();
-  var games = await orm.proxy.game.list(ctx.params.page, 24, {
-    where: {
-      status: true,
-    }
+
+  // 类型
+  if (params.category) {
+    include = [{
+      model: orm.model.Category,
+      attributes: ['id'],
+      where: {
+        id: params.category,
+      }
+    }];
+  }
+
+  // 品类
+  if (params.type) {
+    where.typeId = params.type;
+  }
+
+  // 提测
+  if (params.theme) {
+    where.themeId = params.theme;
+  }
+
+  // 查询
+  var data = await orm.model.Game.findAndCountAll({
+    attributes: ['id', 'name', 'logo', 'size', 'brief', 'sort', 'typeId', 'themeId', 'updatedAt', 'createdAt'],
+    offset: size * (page - 1),
+    limit: size,
+    where: where,
+    include: include,
+    order: [
+      ['sort', 'desc'],
+    ],
   });
-  ctx.body = ctx.render('games.html', games, {
-    params: ctx.params,
+
+  ctx.body = ctx.render('games.html', {
+    list: data.rows,
+    count: data.count,
+    page: page,
+    size: size,
+    nums: Math.floor((data.count - 1) / size + 1) || 1,
     types: types,
     themes: themes,
     categories: categories,
+    params: params,
   });
 });
