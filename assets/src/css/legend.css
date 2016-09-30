@@ -1,4 +1,5 @@
 body { background-color: #f9f9f9; font: 14px/1.5 Tahoma, 'Microsoft Yahei', Helvetica, Arial, 'sans-serif'; }
+*, *:focus { outline: none; }
 i, em, b { font-style: normal; font-weight: normal; }
 ul, ol, li, .list-inline > li { margin: 0; padding: 0; }
 img { vertical-align: middle; }
@@ -163,8 +164,8 @@ img { vertical-align: middle; }
 #header .mainer .wrapper { padding-top: 10px; padding-bottom: 10px; }
 #header .mainer .logo { color: #a50016; font-size: 26px; font-weight: 700; display: inline-block; text-decoration: none; }
 #header .mainer .logo img { display: inline-block; width: 50px; height: 50px; vertical-align: middle; -webkit-animation: rotating 10s linear infinite; animation: rotating 10s linear infinite; }
+#header .mainer .slogan { display: inline-block; vertical-align: top; margin: 12px 0 0 15px; }
 #header .mainer .extra { padding-top: 13px; }
-#header .mainer .extra .slogan { color: #666; margin-right: 20px; }
 #header .mainer .extra ul { display: inline-block; margin: 0; padding: 0; line-height: 1; }
 #header .mainer .extra ul li { margin: 0; padding: 0; }
 #header .mainer .extra ul li:last-child { margin-left: 10px; padding-left: 10px; position: relative; }
@@ -175,6 +176,18 @@ img { vertical-align: middle; }
 #header .navigator li:hover { background-color: #8b000f; }
 #header .navigator li:hover:after { border: none; }
 #header .navigator a { display: block; color: #fff; text-decoration: none; }
+
+/*
+#header .navigator .search { position: relative; margin: 7px 0 0 0; overflow: hidden; height: 36px; border-radius: 18px; line-height: normal; width: 240px; }
+#header .navigator .search.opened { width: 240px; border: 1px solid #eee; background-color: #fff; }
+#header .navigator .search input { position: absolute; right: 40px; top: 0; width: 200px; height: 34px; padding: 5px 20px; font-size: 14px; border: none; background: transparent; }
+#header .navigator .search button { position: absolute; width: 40px; height: 34px; right: 0; top: 0; margin: 0; cursor: pointer; background: none; border: none; color: #999; font-size: 18px; }
+*/
+#header .navigator .search { position: relative; margin: 7px 0 0 0; line-height: normal; }
+#header .navigator .search input { position: relative; z-index: 10; width: 40px; height: 36px; border-radius: 18px; font-size: 14px; padding: 0 20px; border: none; opacity: 0; cursor: pointer; -webkit-transition: 200ms; transition: 200ms; }
+#header .navigator .search button { position: absolute; width: 38px; height: 36px; right: 0; top: 0; margin: 0; cursor: pointer; background: none; border: none; color: #fff; font-size: 18px; -webkit-transition: 200ms; transition: 200ms; }
+#header .navigator .search input:focus { z-index: 1; width: 200px; border: 1px solid #eee; background: #fff; opacity: 1; padding-right: 60px; cursor: text; }
+#header .navigator .search input:focus + button { color: #999; z-index: 5; }
 #footer .wrapper { padding: 30px; font-size: 12px; clear: both; margin-top: 30px; border-top: 1px solid #eee; }
 #footer .wrapper .pull-left span { margin-right: 5px; }
 #footer .wrapper .links { margin-left: 20px; }
@@ -218,11 +231,12 @@ body.games .filter dt { position: absolute; left: 0; top: 0; float: left; min-wi
 body.games .filter dd { float: left; margin: 0 5px 20px 0; }
 body.games .filter dd a { color: #555; display: block; white-space: nowrap; padding: 0 10px; }
 body.games .filter dd a.selected { color: #e4393c; }
-body.games .tools { border-radius: 3px; padding: 10px 15px; margin: 20px 0 10px; border: 1px solid #ddd; font-size: 14px; box-shadow: 0 1px 3px #eee; }
+body.games .tools { border-radius: 3px; padding: 10px 15px; margin: 20px 0 12px; border: 1px solid #eee; font-size: 14px; box-shadow: 0 1px 3px #eee; background-color: #fff; }
 body.games .tools .sorter a { float: left; padding: 0 10px; border: 1px solid #ccc; line-height: 23px; margin-right: -1px; background: #fff; color: #333; }
 body.games .tools .sorter a.selected { background-color: #e4393c; color: #fff; border-color: #e4393c; }
 body.games .tools .sorter a:first-child { border-radius: 3px 0 0 3px; }
 body.games .tools .sorter a:last-child { border-radius: 0 3px 3px 0; }
 body.games .tools .mpager .text { margin-right: 10px; font-family: verdana; line-height: 25px; }
+body.games .tools .mpager .text em { margin: 0 2px; }
 body.games .tools .mpager b { color: #e4393c; }
 body.games .tools .mpager .prev { margin-right: 5px; }

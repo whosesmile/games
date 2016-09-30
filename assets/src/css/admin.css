@@ -10,7 +10,7 @@ body { background-color: #fff; font-size: 14px; color: #333; }
 }
 
 /* login */
-body.login { background: url(http://oba26vm79.bkt.clouddn.com/622382e090df0d630eeeb7bdcd2d7752.jpg) center bottom/cover no-repeat fixed; overflow: hidden !important }
+body.login { background: url(//oba26vm79.bkt.clouddn.com/2f0918f259fd7c926fcb74275784b14d.jpg) center bottom/cover no-repeat fixed; overflow: hidden !important }
 #login .alert { padding: 8px 15px; font-size: 15px; }
 #login { position: absolute; top: 0; left: 0; right: 0; bottom: 0; font-size: 14px; display: flex; }
 #login .form { font-size: 14px }

@@ -215,6 +215,10 @@ var Game = sequelize.define('game', {
     defaultValue: 0,
     comment: '排序规则',
   },
+  version: {
+    type: Sequelize.STRING,
+    comment: '版本信息',
+  },
   android: {
     type: Sequelize.STRING,
     allowNull: true,
@@ -352,20 +356,13 @@ Theme.hasMany(Game, {
 
 // many to many
 Category.belongsToMany(Game, {
-  through: 'games_categories'
+  through: 'games_categories',
 });
 Game.belongsToMany(Category, {
-  through: 'games_categories'
+  through: 'games_categories',
 });
 
-exports.model = {
-  Type: Type,
-  Game: Game,
-  Theme: Theme,
-  Banner: Banner,
-  Admin: Admin,
-  Category: Category,
-};
+exports.sequelize = sequelize;
 
 exports.proxy = {
   type: wrapfn(Type),

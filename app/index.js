@@ -97,7 +97,7 @@ var render = function (name, ...args) {
   if (!name.startsWith('.') && !name.startsWith(config.views)) {
     abspath = path.resolve(module, config.views, name);
   }
-  return env.render(abspath, Object.assign(...args));
+  return env.render(abspath, Object.assign(...args, {}));
 };
 
 // inject render method

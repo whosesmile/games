@@ -145,4 +145,21 @@ function insertGames() {
   });
 }
 
-insertGames();
+// insertGames();
+
+function changeCategory() {
+  listCategory().then(function (data) {
+    categories = data.list.filter(function (item) {
+      return ['联网', '变态'].indexOf(item.name) !== -1;
+    });
+
+    orm.proxy.game.all().then(function(list) {
+      list.forEach(function(item) {
+        item.setCategories(categories);
+        item.save();
+      });
+    });
+  });
+}
+
+// changeCategory();

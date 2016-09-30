@@ -4,8 +4,9 @@
       <a class="logo" href="/">
         <img src="/assets/images/logo.png" alt="传奇游戏" /> 传奇游戏
       </a>
+      <img class="slogan" src="//oba26vm79.bkt.clouddn.com/c710bbe24577eb107e4e154ca36b40c0.png" />
       <div class="pull-right extra">
-        <span class="slogan">传奇你我，游戏人生！</span>
+        <!-- <span class="slogan">传奇你我，游戏人生！</span> -->
         <ul class="list-unstyled list-inline">
           <li><a href="">登录</a></li>
           <li><a href="">注册</a></li>
@@ -15,13 +16,19 @@
   </div>
   <div class="navigator">
     <div class="wrapper">
-      <ul class="list-unstyled list-inline">
+      <ul class="list-unstyled list-inline pull-left">
         <li><a href="/">首页</a></li>
         <li><a href="{{ macro.flatten('/games', {category: 1}) }}">联网手游</a></li>
         <li><a href="{{ macro.flatten('/games', {category: 2}) }}">单机手游</a></li>
         <li><a href="{{ macro.flatten('/games', {category: 3}) }}">破解手游</a></li>
         <li><a href="{{ macro.flatten('/games', {category: 4}) }}">变态手游</a></li>
       </ul>
+      <div class="search pull-right">
+        <form autocomplete="off" method="get" action="">
+          <input type="search" name="key" placeholder="搜索游戏" />
+          <button class=""><i class="icon">&#xe600;</i></button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

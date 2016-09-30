@@ -79,7 +79,7 @@ router.get('/games/:page-:sort-:category-:type-:theme', async(ctx, next) => {
   // 类型
   if (params.category) {
     include = [{
-      model: orm.model.Category,
+      model: orm.sequelize.models.category,
       attributes: ['id'],
       where: {
         id: params.category,
@@ -97,16 +97,21 @@ router.get('/games/:page-:sort-:category-:type-:theme', async(ctx, next) => {
     where.themeId = params.theme;
   }
 
+  var order = [
+    ['sort', 'desc'],
+    ['score', 'desc'],
+    ['createdAt', 'desc']
+  ][params.sort] || ['sort', 'desc'];
+
   // 查询
-  var data = await orm.model.Game.findAndCountAll({
-    attributes: ['id', 'name', 'logo', 'size', 'brief', 'sort', 'typeId', 'themeId', 'updatedAt', 'createdAt'],
+  var data = await orm.sequelize.models.game.findAndCountAll({
+    attributes: ['id', 'name', 'logo', 'size', 'brief', 'sort', 'score', 'typeId', 'themeId', 'updatedAt', 'createdAt'],
     offset: size * (page - 1),
     limit: size,
     where: where,
     include: include,
-    order: [
-      ['sort', 'desc'],
-    ],
+    order: [order, ['id', 'desc']],
+    subQuery: false,
   });
 
   ctx.body = ctx.render('games.html', {
